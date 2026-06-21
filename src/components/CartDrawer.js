@@ -44,7 +44,7 @@ export default function CartDrawer() {
       const order = await res.json()
       if (order.error) { alert('Error: ' + order.error); return; }
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        key: 'rzp_test_T4OHA1NPaAeUpi',
         amount: order.amount,
         currency: 'INR',
         name: 'MakeMyClicks',
