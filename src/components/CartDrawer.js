@@ -46,6 +46,46 @@ export default function CartDrawer() {
     setTimeout(() => setCouponMsg(null), 3000)
   }
 
+  async function handleCheckout() {
+    try {
+      const res = await fetch('/api/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: total })
+      })
+      const order = await res.json()
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: order.amount,
+        currency: 'INR',
+        name: 'MakeMyClicks',
+        description: 'Premium Everyday Wear',
+        image: 'https://i.ibb.co/GQVGR3M2/Chat-GPT-Image-Jun-21-2026-01-38-57-PM.png',
+        order_id: order.id,
+        handler: function(response) {
+          alert('Payment successful! Order ID: ' + response.razorpay_order_id)
+          localStorage.removeItem('mmc_cart')
+          window.dispatchEvent(new Event('mmc_cart_update'))
+          window.location.href = '/order-success'
+        },
+        prefill: {
+          name: '',
+          email: '',
+          contact: ''
+        },
+        theme: {
+          color: '#c9a96e'
+        }
+      }
+
+      const rzp = new window.Razorpay(options)
+      rzp.open()
+    } catch(err) {
+      alert('Payment failed. Please try again.')
+    }
+  }
+
   const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0)
   const count = cart.reduce((s, i) => s + i.qty, 0)
   const shipping = subtotal >= FREE_THRESHOLD ? 0 : FREE_THRESHOLD - subtotal > 0 ? 49 : 0
@@ -194,7 +234,7 @@ export default function CartDrawer() {
 
             {/* Checkout button */}
             <div style={{ padding: '16px 24px 12px' }}>
-              <button style={{ width: '100%', background: 'var(--fog)', color: 'var(--ink)', border: 'none', padding: '15px', fontSize: '11px', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: "'Inter',sans-serif", marginBottom: '10px', transition: 'background .2s' }}
+              <button onClick={handleCheckout} style={{ width: '100%', background: 'var(--fog)', color: 'var(--ink)', border: 'none', padding: '15px', fontSize: '11px', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: "'Inter',sans-serif", marginBottom: '10px', transition: 'background .2s' }}
                 onMouseEnter={e => e.target.style.background = 'var(--gold)'}
                 onMouseLeave={e => e.target.style.background = 'var(--fog)'}>
                 Checkout — Rs.{total.toLocaleString()}
