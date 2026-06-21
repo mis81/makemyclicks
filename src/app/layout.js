@@ -1,4 +1,5 @@
 import './globals.css'
+import Script from 'next/script'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import CartDrawer from '@/components/CartDrawer'
@@ -14,9 +15,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-      </head>
       <body>
         <Navbar />
         <PageTransition>
@@ -24,6 +22,7 @@ export default function RootLayout({ children }) {
         </PageTransition>
         <Footer />
         <CartDrawer />
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="beforeInteractive"/>
       </body>
     </html>
   )

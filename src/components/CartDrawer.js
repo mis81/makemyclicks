@@ -54,6 +54,7 @@ export default function CartDrawer() {
         body: JSON.stringify({ amount: total })
       })
       const order = await res.json()
+      if (order.error) { alert('Error: ' + order.error); return; }
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
@@ -64,24 +65,19 @@ export default function CartDrawer() {
         image: 'https://i.ibb.co/GQVGR3M2/Chat-GPT-Image-Jun-21-2026-01-38-57-PM.png',
         order_id: order.id,
         handler: function(response) {
-          alert('Payment successful! Order ID: ' + response.razorpay_order_id)
           localStorage.removeItem('mmc_cart')
           window.dispatchEvent(new Event('mmc_cart_update'))
           window.location.href = '/order-success'
         },
-        prefill: {
-          name: '',
-          email: '',
-          contact: ''
-        },
-        theme: {
-          color: '#c9a96e'
-        }
+        prefill: { name: '', email: '', contact: '' },
+        theme: { color: '#c9a96e' },
+        modal: { ondismiss: function(){ console.log('Payment dismissed') } }
       }
 
       const rzp = new window.Razorpay(options)
       rzp.open()
     } catch(err) {
+      console.error(err)
       alert('Payment failed. Please try again.')
     }
   }
