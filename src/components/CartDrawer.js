@@ -1,28 +1,24 @@
 'use client'
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 
-const PAYMENT_ICONS = [
-  { name: 'UPI', color: '#5f259f' },
-  { name: 'Card', color: '#1a1f71' },
-  { name: 'COD', color: '#2d6a4f' },
-  { name: 'EMI', color: '#c9a96e' },
-]
+const FREE_THRESHOLD = 499
 
 export default function CartDrawer() {
   const [open, setOpen] = useState(false)
   const [cart, setCart] = useState([])
+  const [coupon, setCoupon] = useState('')
+  const [couponMsg, setCouponMsg] = useState(null)
+  const [summaryOpen, setSummaryOpen] = useState(false)
 
   useEffect(() => {
-    const load = () => {
-      setCart(JSON.parse(localStorage.getItem('mmc_cart') || '[]'))
-    }
+    const load = () => setCart(JSON.parse(localStorage.getItem('mmc_cart') || '[]'))
+    const openCart = () => { load(); setOpen(true) }
     load()
     window.addEventListener('mmc_cart_update', load)
-    window.addEventListener('mmc_open_cart', () => { load(); setOpen(true) })
+    window.addEventListener('mmc_open_cart', openCart)
     return () => {
       window.removeEventListener('mmc_cart_update', load)
-      window.removeEventListener('mmc_open_cart', () => {})
+      window.removeEventListener('mmc_open_cart', openCart)
     }
   }, [])
 
@@ -40,17 +36,30 @@ export default function CartDrawer() {
     window.dispatchEvent(new Event('mmc_cart_update'))
   }
 
-  const total = cart.reduce((s, i) => s + i.price * i.qty, 0)
+  function applyCoupon() {
+    if (!coupon.trim()) return
+    if (coupon.trim().toUpperCase() === 'MMC10') {
+      setCouponMsg({ ok: true, text: 'Coupon applied! 10% off on checkout.' })
+    } else {
+      setCouponMsg({ ok: false, text: 'Invalid coupon code.' })
+    }
+    setTimeout(() => setCouponMsg(null), 3000)
+  }
+
+  const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0)
   const count = cart.reduce((s, i) => s + i.qty, 0)
+  const shipping = subtotal >= FREE_THRESHOLD ? 0 : FREE_THRESHOLD - subtotal > 0 ? 49 : 0
+  const total = subtotal + shipping
+  const deliveryPct = Math.min((subtotal / FREE_THRESHOLD) * 100, 100)
+  const toFree = FREE_THRESHOLD - subtotal
 
   return (
     <>
       {/* Scrim */}
       <div onClick={() => setOpen(false)} style={{
-        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)',
+        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.72)',
         zIndex: 200, opacity: open ? 1 : 0, pointerEvents: open ? 'all' : 'none',
-        transition: 'opacity 0.35s',
-        backdropFilter: open ? 'blur(4px)' : 'none',
+        transition: 'opacity 0.35s', backdropFilter: open ? 'blur(4px)' : 'none',
       }} />
 
       {/* Drawer */}
@@ -60,40 +69,61 @@ export default function CartDrawer() {
         transform: open ? 'translateX(0)' : 'translateX(100%)',
         transition: 'transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94)',
         zIndex: 201, display: 'flex', flexDirection: 'column',
-        boxShadow: open ? '-8px 0 48px rgba(0,0,0,0.5)' : 'none',
+        boxShadow: open ? '-12px 0 60px rgba(0,0,0,0.6)' : 'none',
       }}>
 
         {/* Header */}
-        <div style={{ padding: '24px 28px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ padding: '20px 24px 16px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
           <div>
             <div style={{ fontFamily: "'Playfair Display',serif", fontSize: '20px', fontWeight: 700, color: 'var(--fog)', letterSpacing: '-.01em' }}>Your bag</div>
             {count > 0 && <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '2px' }}>{count} item{count > 1 ? 's' : ''}</div>}
           </div>
           <button onClick={() => setOpen(false)} style={{ background: 'none', border: '1px solid var(--border)', color: 'var(--muted)', width: '32px', height: '32px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', transition: 'all .2s' }}
-            onMouseEnter={e => { e.target.style.borderColor = 'var(--fog)'; e.target.style.color = 'var(--fog)' }}
-            onMouseLeave={e => { e.target.style.borderColor = 'var(--border)'; e.target.style.color = 'var(--muted)' }}>✕</button>
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--fog)'; e.currentTarget.style.color = 'var(--fog)' }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted)' }}>✕</button>
         </div>
 
-        {/* Items */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '20px 28px', display: 'flex', flexDirection: 'column', gap: '1px', background: 'var(--border)' }}>
+        {/* Free delivery progress bar */}
+        {cart.length > 0 && (
+          <div style={{ padding: '12px 24px', background: 'var(--ink)', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              {subtotal >= FREE_THRESHOLD ? (
+                <span style={{ fontSize: '11px', color: '#2d6a4f', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span>✓</span> Free delivery unlocked!
+                </span>
+              ) : (
+                <span style={{ fontSize: '11px', color: 'var(--muted)' }}>
+                  Add <span style={{ color: 'var(--gold)', fontWeight: 600 }}>Rs.{toFree}</span> more for free delivery
+                </span>
+              )}
+              <span style={{ fontSize: '10px', color: 'var(--muted2)' }}>Rs.{FREE_THRESHOLD}</span>
+            </div>
+            <div style={{ height: '4px', background: 'var(--ink3)', borderRadius: '2px', overflow: 'hidden' }}>
+              <div style={{ height: '100%', width: deliveryPct + '%', background: subtotal >= FREE_THRESHOLD ? '#2d6a4f' : 'var(--gold)', borderRadius: '2px', transition: 'width 0.4s ease' }} />
+            </div>
+          </div>
+        )}
+
+        {/* Cart items */}
+        <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '1px', background: 'var(--border)' }}>
           {cart.length === 0 ? (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: '16px', background: 'var(--ink2)', padding: '40px' }}>
-              <svg width="40" height="40" fill="none" stroke="var(--muted)" strokeWidth="1" viewBox="0 0 24 24">
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1, gap: '16px', background: 'var(--ink2)', padding: '60px 40px' }}>
+              <svg width="44" height="44" fill="none" stroke="var(--muted)" strokeWidth="1" viewBox="0 0 24 24">
                 <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
               </svg>
-              <p style={{ fontSize: '13px', color: 'var(--muted)', textAlign: 'center', lineHeight: 1.6, fontWeight: 300 }}>Your bag is empty.<br />Add something worth wearing.</p>
+              <p style={{ fontSize: '13px', color: 'var(--muted)', textAlign: 'center', lineHeight: 1.7, fontWeight: 300 }}>Your bag is empty.<br />Add something worth wearing.</p>
             </div>
           ) : cart.map(item => (
-            <div key={item.id} style={{ display: 'flex', gap: '14px', padding: '16px', background: 'var(--ink)' }}>
-              <img src={item.img} alt={item.name} style={{ width: '72px', height: '80px', objectFit: 'cover', flexShrink: 0, background: 'var(--ink3)' }} />
+            <div key={item.id} style={{ display: 'flex', gap: '14px', padding: '14px 24px', background: 'var(--ink)', alignItems: 'flex-start' }}>
+              <img src={item.img} alt={item.name} style={{ width: '68px', height: '76px', objectFit: 'cover', flexShrink: 0, background: 'var(--ink3)' }} />
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: '12px', color: 'var(--fog)', fontWeight: 400, lineHeight: 1.5, marginBottom: '8px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{item.name}</div>
-                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: '16px', color: 'var(--gold)', fontWeight: 700, marginBottom: '10px' }}>Rs.{(item.price * item.qty).toLocaleString()}</div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <button onClick={() => updateQty(item.id, -1)} style={{ width: '26px', height: '26px', background: 'var(--ink2)', border: '1px solid var(--border)', color: 'var(--muted)', cursor: 'pointer', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all .2s' }}>−</button>
-                  <span style={{ fontSize: '13px', color: 'var(--fog)', minWidth: '20px', textAlign: 'center' }}>{item.qty}</span>
-                  <button onClick={() => updateQty(item.id, 1)} style={{ width: '26px', height: '26px', background: 'var(--ink2)', border: '1px solid var(--border)', color: 'var(--muted)', cursor: 'pointer', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all .2s' }}>+</button>
-                  <button onClick={() => remove(item.id)} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', fontSize: '11px', letterSpacing: '.06em', textTransform: 'uppercase', fontFamily: "'Inter',sans-serif", transition: 'color .2s' }}
+                <div style={{ fontSize: '12px', color: 'var(--fog)', fontWeight: 400, lineHeight: 1.5, marginBottom: '6px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{item.name}</div>
+                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: '15px', color: 'var(--gold)', fontWeight: 700, marginBottom: '10px' }}>Rs.{(item.price * item.qty).toLocaleString()}</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <button onClick={() => updateQty(item.id, -1)} style={{ width: '26px', height: '26px', background: 'var(--ink2)', border: '1px solid var(--border)', color: 'var(--muted)', cursor: 'pointer', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>−</button>
+                  <span style={{ fontSize: '12px', color: 'var(--fog)', minWidth: '22px', textAlign: 'center' }}>{item.qty}</span>
+                  <button onClick={() => updateQty(item.id, 1)} style={{ width: '26px', height: '26px', background: 'var(--ink2)', border: '1px solid var(--border)', color: 'var(--muted)', cursor: 'pointer', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
+                  <button onClick={() => remove(item.id)} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', fontSize: '10px', letterSpacing: '.06em', textTransform: 'uppercase', fontFamily: "'Inter',sans-serif", transition: 'color .2s' }}
                     onMouseEnter={e => e.target.style.color = '#c0392b'}
                     onMouseLeave={e => e.target.style.color = 'var(--muted)'}>Remove</button>
                 </div>
@@ -104,34 +134,99 @@ export default function CartDrawer() {
 
         {/* Footer */}
         {cart.length > 0 && (
-          <div style={{ padding: '20px 28px', borderTop: '1px solid var(--border)' }}>
-            {/* Payment options */}
-            <div style={{ marginBottom: '16px' }}>
-              <div style={{ fontSize: '9px', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '10px' }}>Payment options</div>
+          <div style={{ borderTop: '1px solid var(--border)', background: 'var(--ink2)', flexShrink: 0 }}>
+
+            {/* Coupon */}
+            <div style={{ padding: '14px 24px', borderBottom: '1px solid var(--border)' }}>
               <div style={{ display: 'flex', gap: '8px' }}>
-                {PAYMENT_ICONS.map(p => (
-                  <div key={p.name} style={{ flex: 1, padding: '8px 4px', background: 'var(--ink)', border: '1px solid var(--border)', textAlign: 'center', fontSize: '10px', fontWeight: 700, letterSpacing: '.06em', color: p.color }}>
-                    {p.name}
+                <input
+                  type="text"
+                  placeholder="Enter coupon code"
+                  value={coupon}
+                  onChange={e => setCoupon(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && applyCoupon()}
+                  style={{ flex: 1, background: 'var(--ink)', border: '1px solid var(--border)', color: 'var(--fog)', padding: '10px 14px', fontSize: '12px', fontFamily: "'Inter',sans-serif", outline: 'none', letterSpacing: '.04em' }}
+                />
+                <button onClick={applyCoupon} style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--muted)', padding: '10px 16px', fontSize: '10px', fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: "'Inter',sans-serif", transition: 'all .2s', whiteSpace: 'nowrap' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--gold)'; e.currentTarget.style.color = 'var(--gold)' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted)' }}>
+                  Apply
+                </button>
+              </div>
+              {couponMsg && (
+                <div style={{ marginTop: '8px', fontSize: '11px', color: couponMsg.ok ? '#2d6a4f' : '#c0392b', fontWeight: 500 }}>
+                  {couponMsg.ok ? '✓ ' : '✕ '}{couponMsg.text}
+                </div>
+              )}
+            </div>
+
+            {/* Order summary — collapsible */}
+            <div style={{ borderBottom: '1px solid var(--border)' }}>
+              <button onClick={() => setSummaryOpen(!summaryOpen)} style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 24px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Inter',sans-serif' " }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px' }}>
+                  <span style={{ fontSize: '11px', letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--muted)' }}>Order total</span>
+                  <span style={{ fontFamily: "'Playfair Display',serif", fontSize: '20px', fontWeight: 700, color: 'var(--fog)' }}>Rs.{total.toLocaleString()}</span>
+                </div>
+                <span style={{ fontSize: '11px', color: 'var(--muted)', transition: 'transform .2s', display: 'inline-block', transform: summaryOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>▾</span>
+              </button>
+
+              {summaryOpen && (
+                <div style={{ padding: '0 24px 14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: 'var(--muted)' }}>
+                    <span>Subtotal</span>
+                    <span>Rs.{subtotal.toLocaleString()}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: 'var(--muted)' }}>
+                    <span>Shipping</span>
+                    <span style={{ color: shipping === 0 ? '#2d6a4f' : 'var(--muted)' }}>{shipping === 0 ? 'FREE' : `Rs.${shipping}`}</span>
+                  </div>
+                  <div style={{ height: '1px', background: 'var(--border)', margin: '4px 0' }} />
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: 'var(--fog)', fontWeight: 600 }}>
+                    <span>Total</span>
+                    <span>Rs.{total.toLocaleString()}</span>
+                  </div>
+                  {shipping === 0 && (
+                    <div style={{ fontSize: '10px', color: '#2d6a4f', fontWeight: 500 }}>✓ Free delivery on this order</div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Checkout button */}
+            <div style={{ padding: '16px 24px 12px' }}>
+              <button style={{ width: '100%', background: 'var(--fog)', color: 'var(--ink)', border: 'none', padding: '15px', fontSize: '11px', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: "'Inter',sans-serif", marginBottom: '10px', transition: 'background .2s' }}
+                onMouseEnter={e => e.target.style.background = 'var(--gold)'}
+                onMouseLeave={e => e.target.style.background = 'var(--fog)'}>
+                Checkout — Rs.{total.toLocaleString()}
+              </button>
+
+              {/* Payment modes */}
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', marginBottom: '14px' }}>
+                {[['UPI','#5f259f'],['Card','#1a1f71'],['COD','#2d6a4f'],['EMI','#c9a96e']].map(([name, color]) => (
+                  <span key={name} style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '.06em', color, border: `1px solid ${color}30`, padding: '3px 8px', background: `${color}10` }}>{name}</span>
+                ))}
+              </div>
+
+              {/* Trust strip */}
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', paddingTop: '10px', borderTop: '1px solid var(--border)' }}>
+                {[
+                  { icon: '↩', label: '7-day returns' },
+                  { icon: '🔒', label: 'Secure checkout' },
+                  { icon: '📦', label: 'COD available' },
+                ].map(t => (
+                  <div key={t.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px' }}>
+                    <span style={{ fontSize: '14px' }}>{t.icon}</span>
+                    <span style={{ fontSize: '9px', color: 'var(--muted)', letterSpacing: '.06em', textTransform: 'uppercase', textAlign: 'center' }}>{t.label}</span>
                   </div>
                 ))}
               </div>
+
+              <button onClick={() => setOpen(false)} style={{ width: '100%', background: 'transparent', color: 'var(--muted)', border: 'none', padding: '12px 0 0', fontSize: '10px', letterSpacing: '.08em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: "'Inter',sans-serif", marginTop: '8px', transition: 'color .2s' }}
+                onMouseEnter={e => e.target.style.color = 'var(--fog)'}
+                onMouseLeave={e => e.target.style.color = 'var(--muted)'}>
+                Continue shopping →
+              </button>
             </div>
-            {/* Total */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '16px', paddingTop: '16px', borderTop: '1px solid var(--border)' }}>
-              <span style={{ fontSize: '10px', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--muted)' }}>Subtotal</span>
-              <span style={{ fontFamily: "'Playfair Display',serif", fontSize: '24px', fontWeight: 700, color: 'var(--fog)' }}>Rs.{total.toLocaleString()}</span>
-            </div>
-            <div style={{ fontSize: '11px', color: 'var(--muted)', marginBottom: '16px' }}>
-              {total >= 499 ? '✓ Free delivery included' : `Add Rs.${499 - total} more for free delivery`}
-            </div>
-            <button style={{ width: '100%', background: 'var(--fog)', color: 'var(--ink)', border: 'none', padding: '15px', fontSize: '11px', fontWeight: 600, letterSpacing: '.12em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: "'Inter',sans-serif", marginBottom: '10px', transition: 'background .2s' }}
-              onMouseEnter={e => e.target.style.background = 'var(--gold)'}
-              onMouseLeave={e => e.target.style.background = 'var(--fog)'}>
-              Checkout — Rs.{total.toLocaleString()}
-            </button>
-            <button onClick={() => setOpen(false)} style={{ width: '100%', background: 'transparent', color: 'var(--muted)', border: '1px solid var(--border)', padding: '12px', fontSize: '10px', fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: "'Inter',sans-serif", transition: 'all .2s' }}>
-              Continue shopping
-            </button>
           </div>
         )}
       </div>
