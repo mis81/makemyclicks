@@ -70,6 +70,29 @@ export default function CartDrawer() {
           window.location.href = '/order-success'
         },
         prefill: { name: '', email: '', contact: '' },
+        config: {
+          display: {
+            blocks: {
+              utib: {
+                name: 'Pay via UPI',
+                instruments: [
+                  { method: 'upi' }
+                ]
+              },
+              other: {
+                name: 'Other Payment Methods',
+                instruments: [
+                  { method: 'card' },
+                  { method: 'netbanking' },
+                  { method: 'wallet' },
+                  { method: 'paylater' },
+                ]
+              }
+            },
+            sequence: ['block.utib', 'block.other'],
+            preferences: { show_default_blocks: false }
+          }
+        },
         theme: { color: '#c9a96e' },
         modal: { ondismiss: function(){ console.log('Payment dismissed') } }
       }
