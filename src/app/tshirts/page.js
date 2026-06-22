@@ -129,7 +129,7 @@ export default function TshirtsPage() {
         <div style={{
           position: 'relative',
           width: '100%',
-          height: '500px',
+          height: '560px',
           overflow: 'hidden',
           borderRadius: '16px',
           border: '1px solid var(--border)',
@@ -140,7 +140,7 @@ export default function TshirtsPage() {
               style={{
                 position: 'absolute', inset: 0,
                 width: '100%', height: '100%', objectFit: 'cover',
-                objectPosition: 'center top',
+                objectPosition: 'center center',
                 opacity: i === currentSlide ? 1 : 0,
                 transition: 'opacity 0.6s ease',
               }} />
