@@ -4,22 +4,22 @@ import Link from 'next/link'
 
 const HERO_SLIDES = [
   {
-    img: 'https://i.ibb.co/dJ7jC7Kk/Chat-GPT-Image-Jun-22-2026-03-28-49-PM.png',
+    img: 'https://i.ibb.co/N2QLf1Sq/Chat-GPT-Image-Jun-22-2026-03-42-39-PM.png',
     eyebrow: 'DTF & UV Printing Equipment',
     line1: 'PRINTING',
     line2: 'MACHINES',
     sub: 'Professional DTF and UV printing machines for garment and surface printing. Trade and retail pricing available.',
     cta: 'Shop Machines',
-    position: '50% 30%',
+    position: 'center center',
   },
   {
-    img: 'https://i.ibb.co/3yfPRqTk/Chat-GPT-Image-Jun-22-2026-03-29-51-PM.png',
+    img: 'https://i.ibb.co/d4Fgvv9D/Chat-GPT-Image-Jun-22-2026-03-43-24-PM.png',
     eyebrow: 'Industrial Grade Equipment',
     line1: 'BUILT TO',
     line2: 'PERFORM',
     sub: 'High precision DTF printers. 1440 DPI resolution. Complete setup with RIP software included.',
     cta: 'View Specs',
-    position: '50% 60%',
+    position: 'center center',
   },
 ]
 
@@ -390,7 +390,7 @@ export default function MachinesPage() {
         height: '320px', overflow: 'hidden',
         borderRadius: '12px', border: '1px solid var(--border)',
       }}>
-        <img src="https://i.ibb.co/dJ7jC7Kk/Chat-GPT-Image-Jun-22-2026-03-28-49-PM.png"
+        <img src="https://i.ibb.co/N2QLf1Sq/Chat-GPT-Image-Jun-22-2026-03-42-39-PM.png"
           alt="Machines"
           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%' }} />
         <div style={{
