@@ -2,12 +2,16 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { supabase } from '@/lib/supabase'
 
 export default function CartDrawer() {
   const [open, setOpen] = useState(false)
   const [cart, setCart] = useState([])
   const [coupon, setCoupon] = useState('')
   const [couponApplied, setCouponApplied] = useState(false)
+  const [couponData, setCouponData] = useState(null)
+  const [couponError, setCouponError] = useState('')
+  const [couponLoading, setCouponLoading] = useState(false)
 
   useEffect(() => {
     const load = () => setCart(JSON.parse(localStorage.getItem('mmc_cart') || '[]'))
@@ -39,7 +43,7 @@ export default function CartDrawer() {
       const res = await fetch('/api/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: total })
+        body: JSON.stringify({ amount: finalTotal })
       })
       const order = await res.json()
       if (order.error) { alert('Error: ' + order.error); return; }
@@ -66,10 +70,44 @@ export default function CartDrawer() {
     }
   }
 
+  async function applyCoupon() {
+    if (!coupon) return
+    setCouponLoading(true)
+    setCouponError('')
+    try {
+      if (!supabase) { setCouponError('Coupon service unavailable'); return }
+      const { data, error } = await supabase
+        .from('coupons')
+        .select('*')
+        .eq('code', coupon)
+        .eq('is_active', true)
+        .single()
+      if (error || !data) {
+        setCouponError('Invalid or expired coupon code')
+        setCouponApplied(false)
+        setCouponData(null)
+      } else {
+        setCouponData(data)
+        setCouponApplied(true)
+        setCouponError('')
+      }
+    } catch(err) {
+      setCouponError('Could not validate coupon')
+    } finally {
+      setCouponLoading(false)
+    }
+  }
+
   const total = cart.reduce((s, i) => s + i.price * i.qty, 0)
   const count = cart.reduce((s, i) => s + i.qty, 0)
   const savings = cart.reduce((s, i) => s + ((i.compare_price || i.price) - i.price) * i.qty, 0)
   const freeDelivery = total >= 499
+  const discount = couponApplied && couponData
+    ? couponData.type === 'percent'
+      ? Math.round(total * couponData.value / 100)
+      : (couponData.value || 0)
+    : 0
+  const finalTotal = total - discount + (freeDelivery ? 0 : 49)
 
   return (
     <>
@@ -250,18 +288,30 @@ export default function CartDrawer() {
                   }}
                 />
                 <button
-                  onClick={() => { if (coupon) setCouponApplied(true) }}
+                  onClick={applyCoupon}
+                  disabled={couponLoading || couponApplied}
                   style={{
-                    background: 'transparent', border: '1px solid var(--border)',
-                    color: 'var(--muted)', padding: '10px 16px', fontSize: '11px',
+                    background: couponApplied ? '#2d6a4f' : 'transparent',
+                    border: couponApplied ? '1px solid #2d6a4f' : '1px solid var(--border)',
+                    color: couponApplied ? '#ffffff' : couponLoading ? 'var(--muted)' : 'var(--muted)',
+                    padding: '10px 16px', fontSize: '11px',
                     fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase',
-                    cursor: 'pointer', fontFamily: "'Inter',sans-serif", transition: 'all .2s',
+                    cursor: couponApplied ? 'default' : 'pointer',
+                    fontFamily: "'Inter',sans-serif", transition: 'all .2s', whiteSpace: 'nowrap',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--rose)'; e.currentTarget.style.color = 'var(--rose)' }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted)' }}>
-                  Apply
+                  onMouseEnter={e => { if (!couponApplied && !couponLoading) { e.currentTarget.style.borderColor = 'var(--rose)'; e.currentTarget.style.color = 'var(--rose)' } }}
+                  onMouseLeave={e => { if (!couponApplied && !couponLoading) { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted)' } }}>
+                  {couponLoading ? '...' : couponApplied ? '✓ Applied' : 'Apply'}
                 </button>
               </div>
+              {couponError && (
+                <div style={{ fontSize: '11px', color: '#c0392b', marginTop: '6px' }}>{couponError}</div>
+              )}
+              {couponApplied && couponData && (
+                <div style={{ fontSize: '11px', color: '#2d6a4f', marginTop: '6px', fontWeight: 500 }}>
+                  Coupon {couponData.code} applied — {couponData.type === 'percent' ? `${couponData.value}% off` : `Rs.${couponData.value} off`}
+                </div>
+              )}
             </div>
 
             {/* Price summary */}
@@ -282,10 +332,16 @@ export default function CartDrawer() {
                   {freeDelivery ? 'FREE' : 'Rs.49'}
                 </span>
               </div>
+              {discount > 0 && (
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
+                  <span style={{ color: '#2d6a4f' }}>Coupon discount</span>
+                  <span style={{ color: '#2d6a4f', fontWeight: 600 }}>− Rs.{discount.toLocaleString()}</span>
+                </div>
+              )}
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '10px', borderTop: '1px solid var(--border)' }}>
                 <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--ink)', letterSpacing: '.02em' }}>Total</span>
                 <span style={{ fontFamily: "'Playfair Display',serif", fontSize: '22px', fontWeight: 700, color: 'var(--ink)' }}>
-                  Rs.{(total + (freeDelivery ? 0 : 49)).toLocaleString()}
+                  Rs.{finalTotal.toLocaleString()}
                 </span>
               </div>
             </div>
@@ -321,7 +377,7 @@ export default function CartDrawer() {
                 <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                 </svg>
-                Secure Checkout — Rs.{(total + (freeDelivery ? 0 : 49)).toLocaleString()}
+                Secure Checkout — Rs.{finalTotal.toLocaleString()}
               </button>
               <button onClick={() => setOpen(false)} style={{
                 width: '100%', background: 'transparent', color: 'var(--muted)',

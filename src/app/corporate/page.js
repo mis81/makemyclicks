@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { supabase } from '@/lib/supabase'
 
 const HERO_SLIDES = [
   {
@@ -85,8 +86,21 @@ export default function CorporatePage() {
     setTimeout(() => { setCurrentSlide(idx); setAnimating(false) }, 400)
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
+    try {
+      if (supabase) {
+        await supabase.from('corporate_enquiries').insert([{
+          name: form.name,
+          company: form.company,
+          email: form.email,
+          phone: form.phone,
+          quantity: parseInt(form.qty) || 0,
+          message: form.message,
+          status: 'new',
+        }])
+      }
+    } catch(err) { console.error('Supabase corporate error:', err) }
     setSent(true)
   }
 

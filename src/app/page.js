@@ -21,9 +21,27 @@ const MARQUEE = ['240 GSM Cotton','Premium Quality','Oversized Fit','Rs.230 Only
 export default async function HomePage() {
   let products = FALLBACK
   try {
-    const { data } = await supabase.from('products').select('*').eq('is_active', true).order('created_at', { ascending: false })
-    if (data && data.length) products = data
-  } catch(e) {}
+    if (supabase) {
+      const { data } = await supabase
+        .from('products')
+        .select('*, categories(name, slug)')
+        .eq('is_active', true)
+        .eq('is_featured', true)
+        .order('created_at', { ascending: false })
+        .limit(4)
+      if (data && data.length) {
+        products = data
+      } else {
+        const { data: all } = await supabase
+          .from('products')
+          .select('*, categories(name, slug)')
+          .eq('is_active', true)
+          .order('created_at', { ascending: false })
+          .limit(4)
+        if (all && all.length) products = all
+      }
+    }
+  } catch(e) { console.error('Supabase error:', e) }
 
   return (
     <>
