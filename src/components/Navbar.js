@@ -22,7 +22,7 @@ export default function Navbar() {
 
   const LINKS = [
     { label: 'Home', href: '/' },
-    { label: 'New Arrivals', href: '/products' },
+    { label: 'T-Shirts', href: '/tshirts' },
     { label: 'Collections', href: '/collections' },
     { label: 'Mousepads', href: '/mousepads' },
     { label: 'Corporate Gifting', href: '/corporate' },
