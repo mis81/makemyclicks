@@ -13,7 +13,7 @@ const CATS = [
   { label:'T-Shirts', name:'Oversized Tees', sub:'4 styles', img:FALLBACK[2].image_main_url, href:'/tshirts' },
   { label:'Mousepads', name:'Desk Pads', sub:'4 designs', img:'https://i.ibb.co/4ZNBQygw/Non-Slip-Gaming-Mouse-Pad-Materials-100-smooth.jpg', href:'/mousepads' },
   { label:'Machines', name:'DTF Printers', sub:'3 models', img:'https://i.ibb.co/Z6yPBfwc/A3-DTF-inkjet-printer-set-heat-transfer-t-shirt.jpg', href:'/machines' },
-  { label:'Corporate', name:'Gift Hampers', sub:'Custom orders', img:'https://i.ibb.co/gL17T3X3/995154848928107194.jpg', href:'/corporate' },
+  { label:'Corporate', name:'Gift Hampers', sub:'Custom orders', img:'https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/corporate-1.jpg', href:'/corporate' },
 ]
 
 const MARQUEE = ['240 GSM Cotton','Premium Quality','Oversized Fit','Rs.230 Only','Free Delivery','New Arrivals','Daily Wear','Art Prints']
@@ -54,7 +54,7 @@ export default async function HomePage() {
       }}>
         {/* Background image */}
         <img
-          src="https://i.ibb.co/Fbx6Rc7r/Chat-GPT-Image-Jun-22-2026-04-37-11-PM.png"
+          src="https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/hero-fabric.jpg"
           alt="Premium fabric"
           loading="eager"
           fetchPriority="high"

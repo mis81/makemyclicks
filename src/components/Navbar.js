@@ -72,7 +72,7 @@ export default function Navbar() {
             textDecoration: 'none', flexShrink: 0,
           }}>
             <img
-              src="https://i.ibb.co/GQVGR3M2/Chat-GPT-Image-Jun-21-2026-01-38-57-PM.png"
+              src="https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/logo.png"
               alt="MakeMyClicks"
               style={{ width: '38px', height: '38px', objectFit: 'contain' }}
               onError={e => e.target.style.display = 'none'}

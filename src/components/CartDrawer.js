@@ -53,7 +53,7 @@ export default function CartDrawer() {
         currency: 'INR',
         name: 'MakeMyClicks',
         description: 'Premium Everyday Wear',
-        image: 'https://i.ibb.co/GQVGR3M2/Chat-GPT-Image-Jun-21-2026-01-38-57-PM.png',
+        image: 'https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/logo.png',
         order_id: order.id,
         handler: function(response) {
           localStorage.removeItem('mmc_cart')

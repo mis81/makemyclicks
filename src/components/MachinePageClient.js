@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 const HERO_SLIDES = [
-  { img: 'https://i.ibb.co/N2QLf1Sq/Chat-GPT-Image-Jun-22-2026-03-42-39-PM.png', eyebrow: 'DTF & UV Printing Equipment', line1: 'PRINTING', line2: 'MACHINES', sub: 'Professional DTF and UV printing machines for garment and surface printing. Trade and retail pricing available.', cta: 'Shop Machines', position: 'center center' },
-  { img: 'https://i.ibb.co/d4Fgvv9D/Chat-GPT-Image-Jun-22-2026-03-43-24-PM.png', eyebrow: 'Industrial Grade Equipment', line1: 'BUILT TO', line2: 'PERFORM', sub: 'High precision DTF printers. 1440 DPI resolution. Complete setup with RIP software included.', cta: 'View Specs', position: 'center center' },
+  { img: 'https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/machine-factory.jpg', eyebrow: 'DTF & UV Printing Equipment', line1: 'PRINTING', line2: 'MACHINES', sub: 'Professional DTF and UV printing machines for garment and surface printing. Trade and retail pricing available.', cta: 'Shop Machines', position: 'center center' },
+  { img: 'https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/machine-gears.jpg', eyebrow: 'Industrial Grade Equipment', line1: 'BUILT TO', line2: 'PERFORM', sub: 'High precision DTF printers. 1440 DPI resolution. Complete setup with RIP software included.', cta: 'View Specs', position: 'center center' },
 ]
 
 export default function MachinePageClient({ machines }) {
@@ -163,7 +163,7 @@ export default function MachinePageClient({ machines }) {
       </div>
 
       <div style={{ position: 'relative', margin: '0 40px 40px', height: '320px', overflow: 'hidden', borderRadius: '12px', border: '1px solid var(--border)' }}>
-        <img src="https://i.ibb.co/N2QLf1Sq/Chat-GPT-Image-Jun-22-2026-03-42-39-PM.png" alt="Machines"
+        <img src="https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/machine-factory.jpg" alt="Machines"
           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.5) 50%, transparent 100%)', display: 'flex', alignItems: 'center', padding: '0 56px' }}>
           <div>

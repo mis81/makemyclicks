@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const HERO_SLIDES = [
   {
-    img: 'https://i.ibb.co/DDyZpqW2/Chat-GPT-Image-Jun-22-2026-02-24-08-PM.png',
+    img: 'https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/hero-tshirt1.jpg',
     eyebrow: 'New Collection',
     line1: 'WEAR YOUR',
     line2: 'STYLE',
@@ -13,7 +13,7 @@ const HERO_SLIDES = [
     bgWord: 'STYLE',
   },
   {
-    img: 'https://i.ibb.co/21cNQk46/Chat-GPT-Image-Jun-22-2026-02-18-53-PM.png',
+    img: 'https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/hero-tshirt2.jpg',
     eyebrow: 'Limited Edition',
     line1: 'WEAR YOUR',
     line2: 'ESSENCE',

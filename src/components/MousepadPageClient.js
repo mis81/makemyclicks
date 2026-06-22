@@ -2,8 +2,8 @@
 import { useState, useEffect } from 'react'
 
 const HERO_SLIDES = [
-  { img: 'https://i.ibb.co/vxR7r7GS/Chat-GPT-Image-Jun-22-2026-03-55-19-PM.png', eyebrow: 'For the Serious Gamer', line1: 'PRECISION', line2: 'SURFACES', sub: 'Non-slip gaming mousepads engineered for maximum precision. Smooth glide. Stitched edges. Built to last.', cta: 'Shop Gaming', position: 'center center' },
-  { img: 'https://i.ibb.co/jKr6Yxr/Chat-GPT-Image-Jun-22-2026-03-58-55-PM.png', eyebrow: 'Aesthetic Workspace', line1: 'DESK PADS', line2: 'REDEFINED', sub: 'Japanese art-inspired XL desk pads. Premium fabric surface. Transform your workspace into a work of art.', cta: 'Shop Art Pads', position: 'center center' },
+  { img: 'https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/mousepad-hero1.jpg', eyebrow: 'For the Serious Gamer', line1: 'PRECISION', line2: 'SURFACES', sub: 'Non-slip gaming mousepads engineered for maximum precision. Smooth glide. Stitched edges. Built to last.', cta: 'Shop Gaming', position: 'center center' },
+  { img: 'https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/mousepad-hero2.jpg', eyebrow: 'Aesthetic Workspace', line1: 'DESK PADS', line2: 'REDEFINED', sub: 'Japanese art-inspired XL desk pads. Premium fabric surface. Transform your workspace into a work of art.', cta: 'Shop Art Pads', position: 'center center' },
 ]
 
 const FILTERS = ['All', 'Gaming', 'Art Print', 'Desk Pad', 'XL Size']
@@ -170,7 +170,7 @@ export default function MousepadPageClient({ products }) {
       </div>
 
       <div style={{ position: 'relative', margin: '0 40px 40px', height: '300px', overflow: 'hidden', borderRadius: '12px', border: '1px solid var(--border)' }}>
-        <img src="https://i.ibb.co/jKr6Yxr/Chat-GPT-Image-Jun-22-2026-03-58-55-PM.png" alt="Aesthetic Desk Pads"
+        <img src="https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/mousepad-hero2.jpg" alt="Aesthetic Desk Pads"
           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center center' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.4) 50%, transparent 100%)', display: 'flex', alignItems: 'center', padding: '0 56px' }}>
           <div>

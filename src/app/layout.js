@@ -12,7 +12,7 @@ export const metadata = {
     apple: '/logo.png',
   },
   other: {
-    'link': '<link rel="preload" as="image" href="https://i.ibb.co/Fbx6Rc7r/Chat-GPT-Image-Jun-22-2026-04-37-11-PM.png"/>',
+    'link': '<link rel="preload" as="image" href="https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/hero-fabric.jpg"/>',
   },
 }
 export default function RootLayout({ children }) {

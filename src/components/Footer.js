@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="footer-top">
         <div>
           <Link href="/" className="footer-logo">
-            <img src="https://i.ibb.co/GQVGR3M2/Chat-GPT-Image-Jun-21-2026-01-38-57-PM.png" alt="MakeMyClicks Logo" width={32} height={32} style={{objectFit:'contain',borderRadius:4}} />
+            <img src="https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/logo.png" alt="MakeMyClicks Logo" width={32} height={32} style={{objectFit:'contain',borderRadius:4}} />
             <span className="footer-logo-text">MAKE<em>MY</em>CLICKS</span>
           </Link>
           <p className="footer-desc">Premium everyday wear. 240 GSM cotton, oversized fits, priced for everyone.</p>

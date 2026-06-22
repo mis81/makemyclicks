@@ -52,7 +52,7 @@ export default async function TshirtsPage() {
       <TshirtGrid products={products} />
 
       <div style={{ position: 'relative', width: '100%', height: '400px', overflow: 'hidden', borderTop: '1px solid var(--border)' }}>
-        <img src="https://i.ibb.co/21cNQk46/Chat-GPT-Image-Jun-22-2026-02-18-53-PM.png" alt="Collection"
+        <img src="https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/hero-tshirt2.jpg" alt="Collection"
           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(245,240,232,0.92) 0%, rgba(245,240,232,0.5) 45%, transparent 100%)', display: 'flex', alignItems: 'center' }}>
           <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px', width: '100%' }}>

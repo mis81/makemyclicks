@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase'
 
 const HERO_SLIDES = [
   {
-    img: 'https://i.ibb.co/gL17T3X3/995154848928107194.jpg',
+    img: 'https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/corporate-1.jpg',
     eyebrow: 'Premium Corporate Gifts',
     line1: 'MAKE EVERY',
     line2: 'GESTURE COUNT',
@@ -14,7 +14,7 @@ const HERO_SLIDES = [
     position: 'center center',
   },
   {
-    img: 'https://i.ibb.co/jP1Vbgfq/download-1.jpg',
+    img: 'https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/corporate-2.jpg',
     eyebrow: 'Bulk & Custom Orders',
     line1: 'GIFTING DONE',
     line2: 'RIGHT',
@@ -30,7 +30,7 @@ const PACKAGES = [
     moq: '25 units minimum',
     price: 'Rs.999',
     originalPrice: 'Rs.1,799',
-    img: 'https://i.ibb.co/jP1Vbgfq/download-1.jpg',
+    img: 'https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/corporate-2.jpg',
     tag: 'Popular',
     includes: ['240 GSM Premium Tee', 'Thank You Card', 'Eco Kraft Box'],
     color: false,
@@ -40,7 +40,7 @@ const PACKAGES = [
     moq: '50 units minimum',
     price: 'Rs.1,499',
     originalPrice: 'Rs.2,999',
-    img: 'https://i.ibb.co/gL17T3X3/995154848928107194.jpg',
+    img: 'https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/corporate-1.jpg',
     tag: 'Bestseller',
     includes: ['240 GSM Premium Tee', 'Branded Mug', 'Desk Pad', 'Premium Box', 'Ribbon & Card'],
     color: true,
@@ -50,7 +50,7 @@ const PACKAGES = [
     moq: '100 units minimum',
     price: 'Rs.2,499',
     originalPrice: 'Rs.4,999',
-    img: 'https://i.ibb.co/jP1Vbgfq/download-1.jpg',
+    img: 'https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/corporate-2.jpg',
     tag: 'Premium',
     includes: ['240 GSM Custom Tee', 'Premium Hamper Box', 'Branded Mug', 'Notebook & Pen', 'Custom Tissue', 'Gold Ribbon & Tag'],
     color: false,
