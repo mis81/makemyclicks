@@ -31,8 +31,8 @@ export default async function HomePage() {
       <section style={{
         position: 'relative',
         width: '100%',
-        height: '100vh',
-        minHeight: '640px',
+        height: '600px',
+        minHeight: '600px',
         overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
@@ -50,7 +50,7 @@ export default async function HomePage() {
 
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(135deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.5) 50%, rgba(10,10,10,0.2) 100%)',
+          background: 'linear-gradient(to right, rgba(10,10,10,0.75) 0%, rgba(10,10,10,0.4) 50%, rgba(10,10,10,0.1) 100%)',
         }} />
 
         <div style={{
@@ -61,7 +61,7 @@ export default async function HomePage() {
           gridTemplateColumns: '1fr 1fr',
           gap: '60px',
           alignItems: 'center',
-          paddingTop: '80px',
+          paddingTop: '20px',
         }}>
 
           {/* LEFT — Text */}
@@ -137,7 +137,7 @@ export default async function HomePage() {
             gridTemplateColumns: '1fr 1fr',
             gridTemplateRows: '1fr 1fr',
             gap: '8px',
-            height: '520px',
+            height: '460px',
           }}>
             {products.slice(0, 4).map((p, i) => (
               <Link key={p.id} href={'/products/' + p.slug} className="mosaic-tile">
