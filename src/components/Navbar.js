@@ -30,7 +30,7 @@ export default function Navbar() {
     return () => window.removeEventListener('mmc_cart_update', update)
   }, [])
 
-  const isTransparent = isHome && !scrolled
+  const isTransparent = false
 
   return (
     <>
@@ -49,7 +49,7 @@ export default function Navbar() {
       )}
 
       <nav style={{
-        position: isTransparent ? 'fixed' : 'sticky',
+        position: 'sticky',
         top: 0, left: 0, right: 0,
         zIndex: 100,
         background: isTransparent

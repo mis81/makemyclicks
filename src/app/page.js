@@ -31,15 +31,13 @@ export default async function HomePage() {
       <section style={{
         position: 'relative',
         width: '100%',
-        height: '100vh',
-        minHeight: '700px',
+        height: '480px',
         overflow: 'hidden',
-        display: 'flex',
-        alignItems: 'center',
       }}>
+        {/* Background image */}
         <img
           src="https://i.ibb.co/Fbx6Rc7r/Chat-GPT-Image-Jun-22-2026-04-37-11-PM.png"
-          alt="Premium fabric background"
+          alt="Premium fabric"
           style={{
             position: 'absolute', inset: 0,
             width: '100%', height: '100%',
@@ -48,109 +46,74 @@ export default async function HomePage() {
           }}
         />
 
+        {/* Overlay */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(to right, rgba(10,10,10,0.75) 0%, rgba(10,10,10,0.4) 50%, rgba(10,10,10,0.1) 100%)',
+          background: 'linear-gradient(to right, rgba(10,10,10,0.80) 0%, rgba(10,10,10,0.4) 55%, rgba(10,10,10,0.1) 100%)',
         }} />
 
+        {/* Content — left aligned like Kreo */}
         <div style={{
-          position: 'relative', zIndex: 2,
+          position: 'absolute', inset: 0, zIndex: 2,
           maxWidth: '1400px', margin: '0 auto',
-          padding: '120px 40px 60px',
-          width: '100%',
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '60px',
-          alignItems: 'center',
-          height: '100%',
+          padding: '0 40px',
+          display: 'flex', flexDirection: 'column',
+          justifyContent: 'flex-end',
+          paddingBottom: '48px',
         }}>
-
-          {/* LEFT — Text */}
-          <div>
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: '12px',
-              fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase',
-              color: 'var(--rose)', fontWeight: 600, marginBottom: '24px',
-            }}>
-              <span style={{ width: '32px', height: '1px', background: 'var(--rose)', display: 'inline-block' }} />
-              SS 2025 Collection
-            </div>
-
-            <h1 style={{
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 'clamp(64px,7vw,110px)',
-              lineHeight: 0.88,
-              letterSpacing: '0.01em',
-              color: '#ffffff',
-              marginBottom: '24px',
-            }}>
-              WEAR IT<br />
-              YOUR<br />
-              <span style={{ color: 'var(--rose)' }}>WAY</span>
-            </h1>
-
-            <p style={{
-              fontSize: '15px',
-              color: 'rgba(255,255,255,0.65)',
-              lineHeight: 1.8,
-              maxWidth: '400px',
-              marginBottom: '40px',
-              fontWeight: 300,
-            }}>
-              240 GSM pure cotton. Oversized cuts engineered for real bodies. Premium fabric, one flat price — Rs.230.
-            </p>
-
-            <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '56px' }}>
-              <Link href="/tshirts" className="hero-cta-primary">Shop Now</Link>
-              <Link href="/collections" className="hero-cta-ghost">View collections →</Link>
-            </div>
-
-            <div style={{
-              display: 'flex', gap: '36px',
-              paddingTop: '32px',
-              borderTop: '1px solid rgba(255,255,255,0.15)',
-            }}>
-              {[
-                { num: '240', label: 'GSM Cotton' },
-                { num: 'Rs.230', label: 'Flat price' },
-                { num: '4', label: 'Styles' },
-                { num: '7', label: 'Day returns' },
-              ].map((s, i) => (
-                <div key={i}>
-                  <div style={{
-                    fontFamily: "'Bebas Neue', sans-serif",
-                    fontSize: '26px', color: '#ffffff',
-                    letterSpacing: '0.02em', lineHeight: 1,
-                  }}>{s.num}</div>
-                  <div style={{
-                    fontSize: '10px', letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: 'rgba(255,255,255,0.45)', marginTop: '4px',
-                  }}>{s.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* RIGHT — 2×2 mosaic */}
+          {/* Breadcrumb */}
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gridTemplateRows: '1fr 1fr',
-            gap: '8px',
-            height: '500px',
+            display: 'flex', alignItems: 'center', gap: '8px',
+            marginBottom: '12px',
           }}>
-            {products.slice(0, 4).map((p, i) => (
-              <Link key={p.id} href={'/products/' + p.slug} className="mosaic-tile">
-                <img src={p.image_main_url} alt={p.name} className="mosaic-img" />
-                <div className="mosaic-overlay">
-                  <span className="mosaic-tag">{p.tags || 'Shop Now'}</span>
-                </div>
-              </Link>
-            ))}
+            <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>🏠</span>
+            <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>/</span>
+            <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>Collections</span>
+            <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>/</span>
+            <span style={{ fontSize: '12px', color: '#ffffff', fontWeight: 500 }}>New Arrivals</span>
           </div>
+
+          {/* Giant page title like Kreo */}
+          <h1 style={{
+            fontFamily: "'Bebas Neue', sans-serif",
+            fontSize: 'clamp(64px,8vw,120px)',
+            lineHeight: 0.88,
+            letterSpacing: '0.01em',
+            color: '#ffffff',
+            margin: 0,
+          }}>
+            WEAR IT<br />
+            <span style={{ color: 'var(--rose)' }}>YOUR WAY</span>
+          </h1>
         </div>
 
+        {/* Right side product mosaic */}
+        <div style={{
+          position: 'absolute',
+          right: '40px', top: '50%',
+          transform: 'translateY(-50%)',
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '6px',
+          width: '480px',
+          height: '380px',
+          zIndex: 2,
+        }}>
+          {[
+            'https://i.ibb.co/qM9t0Gsm/Instinct-Print-House-x-Grace-Beswick-Art-Unisex.jpg',
+            'https://i.ibb.co/Rk1YMRS9/Model-Height-6-4-Wearing-Large-Big-Tall-1.jpg',
+            'https://i.ibb.co/zWTVdZzN/Veirdo-Men-s-Oversized-T-Shirt-240-GSM-Pure.jpg',
+            'https://i.ibb.co/NnW32DBX/Premium-Fabric-240-GSM-Terry-Cotton-for-a-soft-1.jpg',
+          ].map((img, i) => (
+            <div key={i} style={{
+              borderRadius: '8px', overflow: 'hidden',
+              border: '1px solid rgba(255,255,255,0.15)',
+            }}>
+              <img src={img} alt="product"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* ── MARQUEE ── */}
