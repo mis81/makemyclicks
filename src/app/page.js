@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import ProductCard from '@/components/ProductCard'
+import FadeIn from '@/components/animations/FadeIn'
+import { StaggerGrid, StaggerItem } from '@/components/animations/StaggerGrid'
 
 const FALLBACK = [
   { id:'MMC-ST-0089', name:'Instinct Print House x Grace Beswick Unisex Tee', price:230, compare_price:300, image_main_url:'https://i.ibb.co/qM9t0Gsm/Instinct-Print-House-x-Grace-Beswick-Art-Unisex.jpg', slug:'instinct-print-house-tee', tags:'Art Print' },
@@ -137,29 +139,33 @@ export default async function HomePage() {
       </section>
 
       {/* ── MARQUEE ── */}
-      <div className="marquee">
-        <div className="marquee-track">
-          {[...MARQUEE,...MARQUEE].map((t,i) => (
-            <span key={i} className="marquee-item"><span className="marquee-star">✦</span>{t}</span>
-          ))}
+      <FadeIn delay={0.1}>
+        <div className="marquee">
+          <div className="marquee-track">
+            {[...MARQUEE,...MARQUEE].map((t,i) => (
+              <span key={i} className="marquee-item"><span className="marquee-star">✦</span>{t}</span>
+            ))}
+          </div>
         </div>
-      </div>
+      </FadeIn>
 
       {/* ── CATEGORY STRIP ── */}
       <div className="cat-strip">
-        <div className="cat-strip-inner">
+        <StaggerGrid className="cat-strip-inner">
           {CATS.map((c,i) => (
-            <Link key={i} href={c.href} className="cat-strip-item">
-              <img src={c.img} alt={c.name} className="cat-strip-img" />
-              <div className="cat-strip-info">
-                <div className="cat-strip-label">{c.label}</div>
-                <div className="cat-strip-name">{c.name}</div>
-                <div className="cat-strip-sub">{c.sub}</div>
-              </div>
-              <span className="cat-strip-arrow">→</span>
-            </Link>
+            <StaggerItem key={i}>
+              <Link href={c.href} className="cat-strip-item">
+                <img src={c.img} alt={c.name} className="cat-strip-img" />
+                <div className="cat-strip-info">
+                  <div className="cat-strip-label">{c.label}</div>
+                  <div className="cat-strip-name">{c.name}</div>
+                  <div className="cat-strip-sub">{c.sub}</div>
+                </div>
+                <span className="cat-strip-arrow">→</span>
+              </Link>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGrid>
       </div>
 
       {/* ── FULL WIDTH BANNER ── */}
@@ -196,16 +202,22 @@ export default async function HomePage() {
       {/* ── PRODUCTS ── */}
       <div style={{ background: 'var(--cream)' }}>
         <div className="section-wrap">
-          <div className="section-rule">
-            <div>
-              <p className="section-eyebrow">New arrivals</p>
-              <h2 className="section-heading">BEST OF<br />MAKEMYCLICKS</h2>
+          <FadeIn delay={0.2}>
+            <div className="section-rule">
+              <div>
+                <p className="section-eyebrow">New arrivals</p>
+                <h2 className="section-heading">BEST OF<br />MAKEMYCLICKS</h2>
+              </div>
+              <Link href="/tshirts" className="section-link">View all →</Link>
             </div>
-            <Link href="/tshirts" className="section-link">View all →</Link>
-          </div>
-          <div className="products-grid">
-            {products.map(p => <ProductCard key={p.id} product={p} />)}
-          </div>
+          </FadeIn>
+          <StaggerGrid style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', borderTop: '1px solid var(--border)', borderLeft: '1px solid var(--border)' }}>
+            {products.map(p => (
+              <StaggerItem key={p.id}>
+                <ProductCard product={p} />
+              </StaggerItem>
+            ))}
+          </StaggerGrid>
         </div>
       </div>
 
