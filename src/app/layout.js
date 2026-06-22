@@ -11,6 +11,9 @@ export const metadata = {
     icon: '/logo.png',
     apple: '/logo.png',
   },
+  other: {
+    'link': '<link rel="preload" as="image" href="https://i.ibb.co/Fbx6Rc7r/Chat-GPT-Image-Jun-22-2026-04-37-11-PM.png"/>',
+  },
 }
 export default function RootLayout({ children }) {
   return (

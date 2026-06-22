@@ -38,10 +38,12 @@ export default async function HomePage() {
         <img
           src="https://i.ibb.co/Fbx6Rc7r/Chat-GPT-Image-Jun-22-2026-04-37-11-PM.png"
           alt="Premium fabric"
+          loading="eager"
+          fetchPriority="high"
           style={{
             position: 'absolute', inset: 0,
             width: '100%', height: '100%',
-            objectFit: 'cover', objectPosition: 'center center',
+            objectFit: 'cover', objectPosition: '20% center',
             display: 'block',
           }}
         />
@@ -109,7 +111,7 @@ export default async function HomePage() {
               borderRadius: '8px', overflow: 'hidden',
               border: '1px solid rgba(255,255,255,0.15)',
             }}>
-              <img src={img} alt="product"
+              <img src={img} alt="product" loading="lazy"
                 style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
           ))}
