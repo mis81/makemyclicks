@@ -21,36 +21,28 @@ export default function CustomCursor() {
       mouseY.set(e.clientY)
       setVisible(true)
     }
-
-    const onDown  = () => setClicking(true)
-    const onUp    = () => setClicking(false)
-
-    const onEnter = e => {
+    const onDown = () => setClicking(true)
+    const onUp   = () => setClicking(false)
+    const onOver = e => {
       if (e.target.closest('a, button, [role="button"]')) setHovering(true)
-    }
-    const onLeave = e => {
-      if (e.target.closest('a, button, [role="button"]')) setHovering(false)
+      else setHovering(false)
     }
 
     window.addEventListener('mousemove', onMove)
     window.addEventListener('mousedown', onDown)
-    window.addEventListener('mouseup', onUp)
-    document.addEventListener('mouseover', onEnter)
-    document.addEventListener('mouseout', onLeave)
+    window.addEventListener('mouseup',   onUp)
+    document.addEventListener('mouseover', onOver)
 
     return () => {
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mousedown', onDown)
-      window.removeEventListener('mouseup', onUp)
-      document.removeEventListener('mouseover', onEnter)
-      document.removeEventListener('mouseout', onLeave)
+      window.removeEventListener('mouseup',   onUp)
+      document.removeEventListener('mouseover', onOver)
     }
   }, [mouseX, mouseY])
 
   if (typeof window !== 'undefined' &&
       window.matchMedia('(pointer: coarse)').matches) return null
-
-  const size = hovering ? 52 : clicking ? 36 : 44
 
   return (
     <motion.div
@@ -63,55 +55,29 @@ export default function CustomCursor() {
         zIndex: 99999,
         pointerEvents: 'none',
         opacity: visible ? 1 : 0,
+        transition: 'opacity 0.3s ease',
       }}
     >
-      {/* Outer circle */}
-      <motion.div
+      <motion.span
         animate={{
-          width: size,
-          height: size,
-          scale: clicking ? 0.85 : 1,
+          fontSize: hovering ? '28px' : clicking ? '18px' : '22px',
+          color: hovering ? 'var(--rose)' : '#0A0A0A',
+          scale: clicking ? 0.8 : 1,
+          rotate: hovering ? -10 : 0,
         }}
         transition={{ duration: 0.15, ease: 'easeOut' }}
         style={{
-          width: size,
-          height: size,
-          borderRadius: '50%',
-          background: hovering
-            ? 'var(--rose)'
-            : 'rgba(10,10,10,0.85)',
-          border: hovering
-            ? '2px solid var(--rose)'
-            : '2px solid rgba(201,116,138,0.6)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backdropFilter: 'blur(4px)',
-          boxShadow: hovering
-            ? '0 0 20px rgba(201,116,138,0.4)'
-            : '0 2px 12px rgba(0,0,0,0.3)',
+          fontFamily: "'Bebas Neue', sans-serif",
+          display: 'block',
+          lineHeight: 1,
+          userSelect: 'none',
+          textShadow: hovering
+            ? '0 0 20px rgba(201,116,138,0.5)'
+            : '0 2px 8px rgba(0,0,0,0.15)',
         }}
       >
-        {/* M letter */}
-        <motion.span
-          animate={{
-            fontSize: hovering ? '16px' : '13px',
-            color: hovering ? '#ffffff' : 'var(--rose)',
-            scale: clicking ? 0.8 : 1,
-          }}
-          transition={{ duration: 0.15 }}
-          style={{
-            fontFamily: "'Bebas Neue', sans-serif",
-            fontSize: '13px',
-            color: 'var(--rose)',
-            letterSpacing: '0.02em',
-            lineHeight: 1,
-            userSelect: 'none',
-          }}
-        >
-          M
-        </motion.span>
-      </motion.div>
+        M
+      </motion.span>
     </motion.div>
   )
 }
