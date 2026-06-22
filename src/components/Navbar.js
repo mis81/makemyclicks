@@ -47,12 +47,11 @@ export default function Navbar() {
           <Link href="/" className="nav-logo">
             <img
               src="https://i.ibb.co/GQVGR3M2/Chat-GPT-Image-Jun-21-2026-01-38-57-PM.png"
-              alt="MakeMyClicks Logo"
-              width={44}
-              height={44}
-              style={{ objectFit: 'contain', borderRadius: '8px' }}
+              alt="MakeMyClicks"
+              className="logo-img"
+              onError={e => e.target.style.display='none'}
             />
-            <span className="logo-text">Make<em>My</em>Clicks</span>
+            <span className="logo-text">MAKE<em>MY</em>CLICKS</span>
           </Link>
 
           <ul className="nav-links">
