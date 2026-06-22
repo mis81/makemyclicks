@@ -67,7 +67,7 @@ const NAV_LINKS = [
   },
 ]
 
-export default function SlidingNav() {
+export default function SlidingNav({ transparent = false }) {
   const [hoveredIndex, setHoveredIndex] = useState(null)
   const pathname = usePathname()
 
@@ -112,7 +112,9 @@ export default function SlidingNav() {
                   ? '#ffffff'
                   : isActive
                     ? '#C9748A'
-                    : '#888078',
+                    : transparent
+                      ? 'rgba(255,255,255,0.75)'
+                      : '#888078',
                 transition: 'color 0.2s ease',
                 zIndex: 1,
                 borderRadius: '999px',
@@ -135,7 +137,7 @@ export default function SlidingNav() {
                       position: 'absolute',
                       inset: 0,
                       borderRadius: '999px',
-                      background: '#0A0A0A',
+                      background: transparent ? 'rgba(255,255,255,0.15)' : '#0A0A0A',
                       zIndex: -1,
                     }}
                   />
@@ -170,7 +172,7 @@ export default function SlidingNav() {
                   width: '4px',
                   height: '4px',
                   borderRadius: '50%',
-                  background: '#C9748A',
+                  background: transparent ? 'rgba(255,255,255,0.6)' : '#C9748A',
                 }} />
               )}
             </Link>

@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import ProductCard from '@/components/ProductCard'
-import HeroSlider from '@/components/HeroSlider'
 
 const FALLBACK = [
   { id:'MMC-ST-0089', name:'Instinct Print House x Grace Beswick Unisex Tee', price:230, compare_price:300, image_main_url:'https://i.ibb.co/qM9t0Gsm/Instinct-Print-House-x-Grace-Beswick-Art-Unisex.jpg', slug:'instinct-print-house-tee', tags:'Art Print' },
@@ -11,10 +10,10 @@ const FALLBACK = [
 ]
 
 const CATS = [
-  { label:'T-Shirts', name:'Oversized Tees', sub:'4 styles', img:FALLBACK[2].image_main_url, href:'/products?cat=oversized' },
+  { label:'T-Shirts', name:'Oversized Tees', sub:'4 styles', img:FALLBACK[2].image_main_url, href:'/tshirts' },
   { label:'Mousepads', name:'Desk Pads', sub:'4 designs', img:'https://i.ibb.co/4ZNBQygw/Non-Slip-Gaming-Mouse-Pad-Materials-100-smooth.jpg', href:'/mousepads' },
   { label:'Machines', name:'DTF Printers', sub:'3 models', img:'https://i.ibb.co/Z6yPBfwc/A3-DTF-inkjet-printer-set-heat-transfer-t-shirt.jpg', href:'/machines' },
-  { label:'Corporate', name:'Gift Hampers', sub:'Custom orders', img:'https://i.ibb.co/cSqwqQvN/Luxury-Gift-Hampers-India-s-Favourite-Online.jpg', href:'/corporate' },
+  { label:'Corporate', name:'Gift Hampers', sub:'Custom orders', img:'https://i.ibb.co/gL17T3X3/995154848928107194.jpg', href:'/corporate' },
 ]
 
 const MARQUEE = ['240 GSM Cotton','Premium Quality','Oversized Fit','Rs.230 Only','Free Delivery','New Arrivals','Daily Wear','Art Prints']
@@ -28,8 +27,142 @@ export default async function HomePage() {
 
   return (
     <>
-      <HeroSlider />
+      {/* ── HERO ── */}
+      <section style={{
+        position: 'relative',
+        width: '100%',
+        height: '100vh',
+        minHeight: '640px',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+      }}>
+        <img
+          src="https://i.ibb.co/Fbx6Rc7r/Chat-GPT-Image-Jun-22-2026-04-37-11-PM.png"
+          alt="Premium fabric background"
+          style={{
+            position: 'absolute', inset: 0,
+            width: '100%', height: '100%',
+            objectFit: 'cover', objectPosition: 'center center',
+            display: 'block',
+          }}
+        />
 
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(135deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.5) 50%, rgba(10,10,10,0.2) 100%)',
+        }} />
+
+        <div style={{
+          position: 'relative', zIndex: 2,
+          maxWidth: '1400px', margin: '0 auto',
+          padding: '0 40px', width: '100%',
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '60px',
+          alignItems: 'center',
+          paddingTop: '80px',
+        }}>
+
+          {/* LEFT — Text */}
+          <div>
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: '12px',
+              fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase',
+              color: 'var(--rose)', fontWeight: 600, marginBottom: '24px',
+            }}>
+              <span style={{ width: '32px', height: '1px', background: 'var(--rose)', display: 'inline-block' }} />
+              SS 2025 Collection
+            </div>
+
+            <h1 style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 'clamp(64px,7vw,110px)',
+              lineHeight: 0.88,
+              letterSpacing: '0.01em',
+              color: '#ffffff',
+              marginBottom: '24px',
+            }}>
+              WEAR IT<br />
+              YOUR<br />
+              <span style={{ color: 'var(--rose)' }}>WAY</span>
+            </h1>
+
+            <p style={{
+              fontSize: '15px',
+              color: 'rgba(255,255,255,0.65)',
+              lineHeight: 1.8,
+              maxWidth: '400px',
+              marginBottom: '40px',
+              fontWeight: 300,
+            }}>
+              240 GSM pure cotton. Oversized cuts engineered for real bodies. Premium fabric, one flat price — Rs.230.
+            </p>
+
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '56px' }}>
+              <Link href="/tshirts" className="hero-cta-primary">Shop Now</Link>
+              <Link href="/collections" className="hero-cta-ghost">View collections →</Link>
+            </div>
+
+            <div style={{
+              display: 'flex', gap: '36px',
+              paddingTop: '32px',
+              borderTop: '1px solid rgba(255,255,255,0.15)',
+            }}>
+              {[
+                { num: '240', label: 'GSM Cotton' },
+                { num: 'Rs.230', label: 'Flat price' },
+                { num: '4', label: 'Styles' },
+                { num: '7', label: 'Day returns' },
+              ].map((s, i) => (
+                <div key={i}>
+                  <div style={{
+                    fontFamily: "'Bebas Neue', sans-serif",
+                    fontSize: '26px', color: '#ffffff',
+                    letterSpacing: '0.02em', lineHeight: 1,
+                  }}>{s.num}</div>
+                  <div style={{
+                    fontSize: '10px', letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,0.45)', marginTop: '4px',
+                  }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* RIGHT — 2×2 mosaic */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gridTemplateRows: '1fr 1fr',
+            gap: '8px',
+            height: '520px',
+          }}>
+            {products.slice(0, 4).map((p, i) => (
+              <Link key={p.id} href={'/products/' + p.slug} className="mosaic-tile">
+                <img src={p.image_main_url} alt={p.name} className="mosaic-img" />
+                <div className="mosaic-overlay">
+                  <span className="mosaic-tag">{p.tags || 'Shop Now'}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div style={{
+          position: 'absolute', bottom: '28px', left: '50%',
+          transform: 'translateX(-50%)', zIndex: 2,
+          display: 'flex', flexDirection: 'column',
+          alignItems: 'center', gap: '8px',
+        }}>
+          <span style={{ fontSize: '9px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)' }}>Scroll</span>
+          <div className="scroll-line" />
+        </div>
+      </section>
+
+      {/* ── MARQUEE ── */}
       <div className="marquee">
         <div className="marquee-track">
           {[...MARQUEE,...MARQUEE].map((t,i) => (
@@ -38,6 +171,7 @@ export default async function HomePage() {
         </div>
       </div>
 
+      {/* ── CATEGORY STRIP ── */}
       <div className="cat-strip">
         <div className="cat-strip-inner">
           {CATS.map((c,i) => (
@@ -54,6 +188,7 @@ export default async function HomePage() {
         </div>
       </div>
 
+      {/* ── FULL WIDTH BANNER ── */}
       <div className="full-banner">
         <img src="https://i.ibb.co/Rk1YMRS9/Model-Height-6-4-Wearing-Large-Big-Tall-1.jpg" alt="New Season" />
         <div className="full-banner-overlay">
@@ -61,11 +196,12 @@ export default async function HomePage() {
             <div className="full-banner-label">New Season</div>
             <div className="full-banner-title">NEW<br />VIBES</div>
             <div className="full-banner-sub">Discover everything new. 240 GSM cotton that moves with you.</div>
-            <Link href="/products" className="btn-primary">Explore Collection</Link>
+            <Link href="/tshirts" className="btn-primary">Explore Collection</Link>
           </div>
         </div>
       </div>
 
+      {/* ── FEATURES ── */}
       <div className="features-wrap">
         <div className="features-grid">
           {[
@@ -83,6 +219,7 @@ export default async function HomePage() {
         </div>
       </div>
 
+      {/* ── PRODUCTS ── */}
       <div style={{ background: 'var(--cream)' }}>
         <div className="section-wrap">
           <div className="section-rule">
@@ -90,13 +227,87 @@ export default async function HomePage() {
               <p className="section-eyebrow">New arrivals</p>
               <h2 className="section-heading">BEST OF<br />MAKEMYCLICKS</h2>
             </div>
-            <Link href="/products" className="section-link">View all →</Link>
+            <Link href="/tshirts" className="section-link">View all →</Link>
           </div>
           <div className="products-grid">
             {products.map(p => <ProductCard key={p.id} product={p} />)}
           </div>
         </div>
       </div>
+
+      <style>{`
+        .hero-cta-primary {
+          background: #ffffff;
+          color: var(--ink);
+          padding: 15px 36px;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          text-decoration: none;
+          display: inline-block;
+          transition: background 0.2s, color 0.2s;
+        }
+        .hero-cta-primary:hover { background: var(--rose); color: #fff; }
+
+        .hero-cta-ghost {
+          font-size: 11px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.6);
+          text-decoration: none;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          transition: color 0.2s;
+        }
+        .hero-cta-ghost:hover { color: #fff; }
+
+        .mosaic-tile {
+          position: relative;
+          overflow: hidden;
+          border-radius: 8px;
+          display: block;
+          text-decoration: none;
+          border: 1px solid rgba(255,255,255,0.1);
+        }
+        .mosaic-img {
+          width: 100%; height: 100%;
+          object-fit: cover; display: block;
+          transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.5s;
+          filter: grayscale(15%);
+        }
+        .mosaic-tile:hover .mosaic-img {
+          transform: scale(1.06);
+          filter: grayscale(0%);
+        }
+        .mosaic-overlay {
+          position: absolute; inset: 0;
+          background: linear-gradient(to top, rgba(10,10,10,0.7) 0%, transparent 50%);
+          display: flex; align-items: flex-end;
+          padding: 12px;
+          opacity: 0; transition: opacity 0.3s;
+        }
+        .mosaic-tile:hover .mosaic-overlay { opacity: 1; }
+        .mosaic-tag {
+          font-size: 11px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #fff;
+          font-weight: 500;
+        }
+
+        .scroll-line {
+          width: 1px; height: 40px;
+          background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+          animation: scrollLine 2s ease-in-out infinite;
+        }
+        @keyframes scrollLine {
+          0%, 100% { opacity: 0.4; transform: scaleY(1); }
+          50% { opacity: 0.8; transform: scaleY(1.2); }
+        }
+      `}</style>
     </>
   )
 }
