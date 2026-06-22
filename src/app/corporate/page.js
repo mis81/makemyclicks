@@ -122,7 +122,7 @@ export default function CorporatePage() {
           {/* Dark overlay */}
           <div style={{
             position: 'absolute', inset: 0,
-            background: 'linear-gradient(to right, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.5) 50%, rgba(10,10,10,0.1) 100%)',
+            background: 'linear-gradient(to right, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.3) 45%, rgba(10,10,10,0.0) 100%)',
           }} />
 
           {/* Content */}
