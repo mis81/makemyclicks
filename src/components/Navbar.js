@@ -1,24 +1,13 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import SlidingNav from '@/components/SlidingNav'
 
 export default function Navbar() {
   const [cartCount, setCartCount] = useState(0)
   const [searchOpen, setSearchOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [query, setQuery] = useState('')
-  const pathname = usePathname()
-
-  useEffect(() => {
-    const update = () => {
-      const cart = JSON.parse(localStorage.getItem('mmc_cart') || '[]')
-      setCartCount(cart.reduce((s, i) => s + i.qty, 0))
-    }
-    update()
-    window.addEventListener('mmc_cart_update', update)
-    return () => window.removeEventListener('mmc_cart_update', update)
-  }, [])
 
   const LINKS = [
     { label: 'Home', href: '/' },
@@ -29,6 +18,16 @@ export default function Navbar() {
     { label: 'Raw Materials', href: '/products?cat=raw-materials' },
     { label: 'Machines', href: '/machines' },
   ]
+
+  useEffect(() => {
+    const update = () => {
+      const cart = JSON.parse(localStorage.getItem('mmc_cart') || '[]')
+      setCartCount(cart.reduce((s, i) => s + i.qty, 0))
+    }
+    update()
+    window.addEventListener('mmc_cart_update', update)
+    return () => window.removeEventListener('mmc_cart_update', update)
+  }, [])
 
   return (
     <>
@@ -54,15 +53,9 @@ export default function Navbar() {
             <span className="logo-text">MAKE<em>MY</em>CLICKS</span>
           </Link>
 
-          <ul className="nav-links">
-            {LINKS.map(l => (
-              <li key={l.href}>
-                <Link href={l.href} style={{ borderBottomColor: pathname === l.href ? 'var(--gold)' : 'transparent', color: pathname === l.href ? 'var(--fog)' : '' }}>
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+            <SlidingNav />
+          </div>
 
           <div className="nav-right">
             <div className={'search-wrap' + (searchOpen ? ' open' : '')}>
