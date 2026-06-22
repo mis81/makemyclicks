@@ -129,7 +129,7 @@ export default function TshirtsPage() {
         <div style={{
           position: 'relative',
           width: '100%',
-          height: '560px',
+          height: '520px',
           overflow: 'hidden',
           borderRadius: '16px',
           border: '1px solid var(--border)',
@@ -138,9 +138,12 @@ export default function TshirtsPage() {
           {HERO_SLIDES.map((slide, i) => (
             <img key={i} src={slide.img} alt={slide.line2}
               style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: '50% 15%',
+                display: 'block',
                 position: 'absolute', inset: 0,
-                width: '100%', height: '100%', objectFit: 'cover',
-                objectPosition: 'center center',
                 opacity: i === currentSlide ? 1 : 0,
                 transition: 'opacity 0.6s ease',
               }} />
