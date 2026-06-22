@@ -3,88 +3,115 @@ import { useEffect, useState } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 
 export default function CustomCursor() {
-  const [isVisible, setIsVisible] = useState(false)
-  const [isHovering, setIsHovering] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const [clicking, setClicking] = useState(false)
+  const [hovering, setHovering] = useState(false)
 
-  const cursorX = useMotionValue(-100)
-  const cursorY = useMotionValue(-100)
+  const mouseX = useMotionValue(-200)
+  const mouseY = useMotionValue(-200)
 
-  const springX = useSpring(cursorX, { stiffness: 1200, damping: 50, mass: 0.2 })
-  const springY = useSpring(cursorY, { stiffness: 1200, damping: 50, mass: 0.2 })
-
-  const dotX = useSpring(cursorX, { stiffness: 2000, damping: 60, mass: 0.1 })
-  const dotY = useSpring(cursorY, { stiffness: 2000, damping: 60, mass: 0.1 })
+  const x = useSpring(mouseX, { stiffness: 3000, damping: 80, mass: 0.1 })
+  const y = useSpring(mouseY, { stiffness: 3000, damping: 80, mass: 0.1 })
 
   useEffect(() => {
-    const move = e => {
-      cursorX.set(e.clientX)
-      cursorY.set(e.clientY)
-      if (!isVisible) setIsVisible(true)
+    if (window.matchMedia('(pointer: coarse)').matches) return
+
+    const onMove = e => {
+      mouseX.set(e.clientX)
+      mouseY.set(e.clientY)
+      setVisible(true)
     }
 
-    const enter = () => setIsHovering(true)
-    const leave = () => setIsHovering(false)
+    const onDown  = () => setClicking(true)
+    const onUp    = () => setClicking(false)
 
-    window.addEventListener('mousemove', move)
+    const onEnter = e => {
+      if (e.target.closest('a, button, [role="button"]')) setHovering(true)
+    }
+    const onLeave = e => {
+      if (e.target.closest('a, button, [role="button"]')) setHovering(false)
+    }
 
-    const interactives = document.querySelectorAll('a, button, [role="button"]')
-    interactives.forEach(el => {
-      el.addEventListener('mouseenter', enter)
-      el.addEventListener('mouseleave', leave)
-    })
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mousedown', onDown)
+    window.addEventListener('mouseup', onUp)
+    document.addEventListener('mouseover', onEnter)
+    document.addEventListener('mouseout', onLeave)
 
     return () => {
-      window.removeEventListener('mousemove', move)
-      interactives.forEach(el => {
-        el.removeEventListener('mouseenter', enter)
-        el.removeEventListener('mouseleave', leave)
-      })
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('mousedown', onDown)
+      window.removeEventListener('mouseup', onUp)
+      document.removeEventListener('mouseover', onEnter)
+      document.removeEventListener('mouseout', onLeave)
     }
-  }, [isVisible, cursorX, cursorY])
+  }, [mouseX, mouseY])
 
-  if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
-    return null
-  }
+  if (typeof window !== 'undefined' &&
+      window.matchMedia('(pointer: coarse)').matches) return null
+
+  const size = hovering ? 52 : clicking ? 36 : 44
 
   return (
-    <>
-      {/* Outer ring */}
+    <motion.div
+      style={{
+        position: 'fixed',
+        left: x,
+        top: y,
+        x: '-50%',
+        y: '-50%',
+        zIndex: 99999,
+        pointerEvents: 'none',
+        opacity: visible ? 1 : 0,
+      }}
+    >
+      {/* Outer circle */}
       <motion.div
-        style={{
-          position: 'fixed',
-          left: springX,
-          top: springY,
-          x: '-50%',
-          y: '-50%',
-          width: isHovering ? '48px' : '32px',
-          height: isHovering ? '48px' : '32px',
-          border: '1.5px solid var(--rose)',
-          borderRadius: '50%',
-          pointerEvents: 'none',
-          zIndex: 9999,
-          opacity: isVisible ? (isHovering ? 0.8 : 0.4) : 0,
-          transition: 'width 0.15s ease, height 0.15s ease, opacity 0.2s ease',
-          mixBlendMode: 'difference',
+        animate={{
+          width: size,
+          height: size,
+          scale: clicking ? 0.85 : 1,
         }}
-      />
-      {/* Inner dot */}
-      <motion.div
+        transition={{ duration: 0.15, ease: 'easeOut' }}
         style={{
-          position: 'fixed',
-          left: dotX,
-          top: dotY,
-          x: '-50%',
-          y: '-50%',
-          width: isHovering ? '6px' : '4px',
-          height: isHovering ? '6px' : '4px',
-          background: 'var(--rose)',
+          width: size,
+          height: size,
           borderRadius: '50%',
-          pointerEvents: 'none',
-          zIndex: 9999,
-          opacity: isVisible ? 1 : 0,
-          transition: 'width 0.2s ease, height 0.2s ease',
+          background: hovering
+            ? 'var(--rose)'
+            : 'rgba(10,10,10,0.85)',
+          border: hovering
+            ? '2px solid var(--rose)'
+            : '2px solid rgba(201,116,138,0.6)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backdropFilter: 'blur(4px)',
+          boxShadow: hovering
+            ? '0 0 20px rgba(201,116,138,0.4)'
+            : '0 2px 12px rgba(0,0,0,0.3)',
         }}
-      />
-    </>
+      >
+        {/* M letter */}
+        <motion.span
+          animate={{
+            fontSize: hovering ? '16px' : '13px',
+            color: hovering ? '#ffffff' : 'var(--rose)',
+            scale: clicking ? 0.8 : 1,
+          }}
+          transition={{ duration: 0.15 }}
+          style={{
+            fontFamily: "'Bebas Neue', sans-serif",
+            fontSize: '13px',
+            color: 'var(--rose)',
+            letterSpacing: '0.02em',
+            lineHeight: 1,
+            userSelect: 'none',
+          }}
+        >
+          M
+        </motion.span>
+      </motion.div>
+    </motion.div>
   )
 }
