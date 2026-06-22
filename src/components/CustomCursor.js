@@ -9,11 +9,11 @@ export default function CustomCursor() {
   const cursorX = useMotionValue(-100)
   const cursorY = useMotionValue(-100)
 
-  const springX = useSpring(cursorX, { stiffness: 500, damping: 40 })
-  const springY = useSpring(cursorY, { stiffness: 500, damping: 40 })
+  const springX = useSpring(cursorX, { stiffness: 1200, damping: 50, mass: 0.2 })
+  const springY = useSpring(cursorY, { stiffness: 1200, damping: 50, mass: 0.2 })
 
-  const dotX = useSpring(cursorX, { stiffness: 800, damping: 50 })
-  const dotY = useSpring(cursorY, { stiffness: 800, damping: 50 })
+  const dotX = useSpring(cursorX, { stiffness: 2000, damping: 60, mass: 0.1 })
+  const dotY = useSpring(cursorY, { stiffness: 2000, damping: 60, mass: 0.1 })
 
   useEffect(() => {
     const move = e => {
@@ -63,7 +63,7 @@ export default function CustomCursor() {
           pointerEvents: 'none',
           zIndex: 9999,
           opacity: isVisible ? (isHovering ? 0.8 : 0.4) : 0,
-          transition: 'width 0.3s ease, height 0.3s ease, opacity 0.3s ease',
+          transition: 'width 0.15s ease, height 0.15s ease, opacity 0.2s ease',
           mixBlendMode: 'difference',
         }}
       />

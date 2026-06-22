@@ -126,6 +126,7 @@ export default function MachinePageClient({ machines }) {
                 onMouseLeave={e => e.currentTarget.style.background = 'var(--white)'}>
                 <div style={{ position: 'relative', aspectRatio: '4/3', overflow: 'hidden', background: 'var(--cream2)' }}>
                   <img src={p.image_main_url} alt={p.name} loading="lazy"
+                    onError={e => { e.target.src = 'https://i.ibb.co/Z6yPBfwc/A3-DTF-inkjet-printer-set-heat-transfer-t-shirt.jpg' }}
                     style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.5s' }}
                     onMouseEnter={e => e.target.style.transform = 'scale(1.04)'}
                     onMouseLeave={e => e.target.style.transform = 'scale(1)'} />
