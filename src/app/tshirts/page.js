@@ -149,7 +149,7 @@ export default function TshirtsPage() {
           {/* Overlay gradient */}
           <div style={{
             position: 'absolute', inset: 0,
-            background: 'linear-gradient(to right, rgba(245,240,232,0.92) 0%, rgba(245,240,232,0.55) 45%, rgba(245,240,232,0.05) 100%)',
+            background: 'linear-gradient(to right, rgba(10,10,10,0.65) 0%, rgba(10,10,10,0.3) 45%, rgba(10,10,10,0.0) 100%)',
           }} />
 
           {/* Giant watermark word */}
@@ -194,7 +194,7 @@ export default function TshirtsPage() {
                 fontFamily: "'Bebas Neue',sans-serif",
                 fontSize: 'clamp(48px,5.5vw,80px)',
                 lineHeight: 0.9, letterSpacing: '0.01em',
-                color: 'var(--ink)', marginBottom: '16px',
+                color: '#ffffff', marginBottom: '16px',
               }}>
                 {s.line1}<br />
                 <span style={{ color: 'var(--rose)' }}>{s.line2}</span>
@@ -202,7 +202,7 @@ export default function TshirtsPage() {
 
               {/* Sub */}
               <p style={{
-                fontSize: '13px', color: 'var(--muted)',
+                fontSize: '13px', color: 'rgba(255,255,255,0.7)',
                 lineHeight: 1.8, marginBottom: '24px',
                 fontWeight: 300, maxWidth: '360px',
               }}>
@@ -212,23 +212,23 @@ export default function TshirtsPage() {
               {/* CTAs */}
               <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                 <a href="#products" style={{
-                  background: 'var(--ink)', color: 'var(--white)',
+                  background: 'var(--white)', color: 'var(--ink)',
                   padding: '12px 28px', fontSize: '11px', fontWeight: 600,
                   letterSpacing: '0.12em', textTransform: 'uppercase',
                   textDecoration: 'none', display: 'inline-block',
                   transition: 'background 0.2s',
                 }}
-                  onMouseEnter={e => e.target.style.background = 'var(--rose)'}
-                  onMouseLeave={e => e.target.style.background = 'var(--ink)'}>
+                  onMouseEnter={e => { e.target.style.background = 'var(--rose)'; e.target.style.color = '#ffffff' }}
+                  onMouseLeave={e => { e.target.style.background = 'var(--white)'; e.target.style.color = 'var(--ink)' }}>
                   {s.cta}
                 </a>
                 <Link href="/collections" style={{
                   fontSize: '11px', letterSpacing: '0.1em', textTransform: 'uppercase',
-                  color: 'var(--muted)', textDecoration: 'none', fontWeight: 500,
+                  color: 'rgba(255,255,255,0.6)', textDecoration: 'none', fontWeight: 500,
                   transition: 'color 0.2s',
                 }}
-                  onMouseEnter={e => e.target.style.color = 'var(--ink)'}
-                  onMouseLeave={e => e.target.style.color = 'var(--muted)'}>
+                  onMouseEnter={e => e.target.style.color = '#ffffff'}
+                  onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.6)'}>
                   All Collections →
                 </Link>
               </div>
@@ -239,25 +239,25 @@ export default function TshirtsPage() {
           <button onClick={() => goSlide((currentSlide - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)}
             style={{
               position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)',
-              background: 'rgba(245,240,232,0.9)', border: '1px solid var(--border)',
-              color: 'var(--muted)', width: '40px', height: '40px', cursor: 'pointer',
+              background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.2)',
+              color: 'rgba(255,255,255,0.7)', width: '40px', height: '40px', cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '16px', zIndex: 3, transition: 'all 0.2s', borderRadius: '4px',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'var(--ink)'; e.currentTarget.style.color = 'var(--white)' }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(245,240,232,0.9)'; e.currentTarget.style.color = 'var(--muted)' }}>
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.7)'; e.currentTarget.style.color = '#ffffff' }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.4)'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)' }}>
             ←
           </button>
           <button onClick={() => goSlide((currentSlide + 1) % HERO_SLIDES.length)}
             style={{
               position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)',
-              background: 'rgba(245,240,232,0.9)', border: '1px solid var(--border)',
-              color: 'var(--muted)', width: '40px', height: '40px', cursor: 'pointer',
+              background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.2)',
+              color: 'rgba(255,255,255,0.7)', width: '40px', height: '40px', cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '16px', zIndex: 3, transition: 'all 0.2s', borderRadius: '4px',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'var(--ink)'; e.currentTarget.style.color = 'var(--white)' }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(245,240,232,0.9)'; e.currentTarget.style.color = 'var(--muted)' }}>
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.7)'; e.currentTarget.style.color = '#ffffff' }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.4)'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)' }}>
             →
           </button>
 
@@ -270,7 +270,7 @@ export default function TshirtsPage() {
               <button key={i} onClick={() => goSlide(i)}
                 style={{
                   width: i === currentSlide ? '28px' : '8px',
-                  height: '3px', background: i === currentSlide ? 'var(--ink)' : 'var(--border2)',
+                  height: '3px', background: i === currentSlide ? '#ffffff' : 'rgba(255,255,255,0.35)',
                   border: 'none', cursor: 'pointer', padding: 0,
                   transition: 'all 0.3s ease', borderRadius: '2px',
                 }} />
@@ -281,7 +281,7 @@ export default function TshirtsPage() {
           <div style={{
             position: 'absolute', bottom: '20px', right: '20px',
             fontFamily: "'Bebas Neue',sans-serif",
-            fontSize: '13px', letterSpacing: '0.1em', color: 'var(--muted)', zIndex: 3,
+            fontSize: '13px', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', zIndex: 3,
           }}>
             {String(currentSlide + 1).padStart(2, '0')} / {String(HERO_SLIDES.length).padStart(2, '0')}
           </div>
