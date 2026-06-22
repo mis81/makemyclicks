@@ -3,18 +3,24 @@ import { useEffect, useState } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 
 export default function CustomCursor() {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible]   = useState(false)
   const [clicking, setClicking] = useState(false)
   const [hovering, setHovering] = useState(false)
 
   const mouseX = useMotionValue(-200)
   const mouseY = useMotionValue(-200)
 
-  const x = useSpring(mouseX, { stiffness: 3000, damping: 80, mass: 0.1 })
-  const y = useSpring(mouseY, { stiffness: 3000, damping: 80, mass: 0.1 })
+  // Outer ring — slightly behind mouse for smooth trail
+  const ringX = useSpring(mouseX, { stiffness: 180, damping: 28, mass: 0.3 })
+  const ringY = useSpring(mouseY, { stiffness: 180, damping: 28, mass: 0.3 })
+
+  // Inner dot — sticks tightly to mouse
+  const dotX = useSpring(mouseX, { stiffness: 800, damping: 50, mass: 0.1 })
+  const dotY = useSpring(mouseY, { stiffness: 800, damping: 50, mass: 0.1 })
 
   useEffect(() => {
-    if (window.matchMedia('(pointer: coarse)').matches) return
+    if (typeof window !== 'undefined' &&
+        window.matchMedia('(pointer: coarse)').matches) return
 
     const onMove = e => {
       mouseX.set(e.clientX)
@@ -24,8 +30,11 @@ export default function CustomCursor() {
     const onDown = () => setClicking(true)
     const onUp   = () => setClicking(false)
     const onOver = e => {
-      if (e.target.closest('a, button, [role="button"]')) setHovering(true)
-      else setHovering(false)
+      if (e.target.closest('a, button, [role="button"], input, textarea, select')) {
+        setHovering(true)
+      } else {
+        setHovering(false)
+      }
     }
 
     window.addEventListener('mousemove', onMove)
@@ -45,39 +54,70 @@ export default function CustomCursor() {
       window.matchMedia('(pointer: coarse)').matches) return null
 
   return (
-    <motion.div
-      style={{
-        position: 'fixed',
-        left: x,
-        top: y,
-        x: '-50%',
-        y: '-50%',
-        zIndex: 99999,
-        pointerEvents: 'none',
-        opacity: visible ? 1 : 0,
-        transition: 'opacity 0.3s ease',
-      }}
-    >
-      <motion.span
-        animate={{
-          fontSize: hovering ? '28px' : clicking ? '18px' : '22px',
-          color: hovering ? 'var(--rose)' : '#0A0A0A',
-          scale: clicking ? 0.8 : 1,
-          rotate: hovering ? -10 : 0,
-        }}
-        transition={{ duration: 0.15, ease: 'easeOut' }}
+    <>
+      {/* Outer ring — smooth trail */}
+      <motion.div
         style={{
-          fontFamily: "'Bebas Neue', sans-serif",
-          display: 'block',
-          lineHeight: 1,
-          userSelect: 'none',
-          textShadow: hovering
-            ? '0 0 20px rgba(201,116,138,0.5)'
-            : '0 2px 8px rgba(0,0,0,0.15)',
+          position: 'fixed',
+          left: ringX,
+          top: ringY,
+          x: '-50%',
+          y: '-50%',
+          pointerEvents: 'none',
+          zIndex: 99999,
         }}
       >
-        M
-      </motion.span>
-    </motion.div>
+        <motion.div
+          animate={{
+            width:  hovering ? 44 : clicking ? 28 : 36,
+            height: hovering ? 44 : clicking ? 28 : 36,
+            borderColor: hovering ? 'var(--rose)' : 'rgba(201,116,138,0.7)',
+            backgroundColor: hovering
+              ? 'rgba(201,116,138,0.12)'
+              : 'transparent',
+            opacity: visible ? 1 : 0,
+          }}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
+          style={{
+            width: 36,
+            height: 36,
+            borderRadius: '50%',
+            border: '1.5px solid rgba(201,116,138,0.7)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        />
+      </motion.div>
+
+      {/* Inner dot — tight follow */}
+      <motion.div
+        style={{
+          position: 'fixed',
+          left: dotX,
+          top: dotY,
+          x: '-50%',
+          y: '-50%',
+          pointerEvents: 'none',
+          zIndex: 99999,
+        }}
+      >
+        <motion.div
+          animate={{
+            width:  hovering ? 6 : clicking ? 3 : 5,
+            height: hovering ? 6 : clicking ? 3 : 5,
+            backgroundColor: hovering ? 'var(--rose)' : '#0A0A0A',
+            opacity: visible ? 1 : 0,
+          }}
+          transition={{ duration: 0.15, ease: 'easeOut' }}
+          style={{
+            width: 5,
+            height: 5,
+            borderRadius: '50%',
+            backgroundColor: '#0A0A0A',
+          }}
+        />
+      </motion.div>
+    </>
   )
 }
