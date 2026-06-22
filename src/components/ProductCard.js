@@ -1,10 +1,9 @@
 'use client'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import WishlistButton from '@/components/WishlistButton'
 
 export default function ProductCard({ product: p }) {
-  const [isWishlisted, setIsWishlisted] = useState(false)
   const off = p.compare_price ? Math.round(((p.compare_price - p.price) / p.compare_price) * 100) : 0
 
   function addToCart(e) {
@@ -64,29 +63,7 @@ export default function ProductCard({ product: p }) {
           )}
 
           {/* Wishlist button */}
-          <motion.button
-            whileHover={{ scale: 1.15 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={e => { e.preventDefault(); setIsWishlisted(!isWishlisted) }}
-            style={{
-              position: 'absolute', top: '10px', right: '10px',
-              width: '32px', height: '32px',
-              background: 'rgba(245,240,232,0.9)',
-              border: '1px solid var(--border)', borderRadius: '50%',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              cursor: 'pointer',
-              color: isWishlisted ? 'var(--rose)' : 'var(--muted)',
-            }}
-          >
-            <motion.svg
-              width="14" height="14" fill={isWishlisted ? 'var(--rose)' : 'none'}
-              stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"
-              animate={{ scale: isWishlisted ? [1, 1.3, 1] : 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </motion.svg>
-          </motion.button>
+          <WishlistButton productId={p.id} />
 
           {/* Quick add overlay on hover */}
           <motion.div

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import SlidingNav from '@/components/SlidingNav'
+import { useWishlist } from '@/hooks/useWishlist'
 
 export default function Navbar() {
   const [cartCount, setCartCount] = useState(0)
@@ -13,6 +14,7 @@ export default function Navbar() {
   const pathname = usePathname()
 
   const isHome = pathname === '/'
+  const { wishlist } = useWishlist()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -135,15 +137,26 @@ export default function Navbar() {
             </div>
 
             {/* Wishlist */}
-            <button style={{
+            <Link href="/wishlist" style={{
               background: 'none', border: 'none', cursor: 'pointer',
               color: isTransparent ? 'rgba(255,255,255,0.8)' : 'var(--muted)',
               padding: '8px', transition: 'color 0.4s ease',
+              position: 'relative', display: 'flex', alignItems: 'center',
+              textDecoration: 'none',
             }}>
               <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
               </svg>
-            </button>
+              {wishlist.length > 0 && (
+                <span style={{
+                  position: 'absolute', top: '2px', right: '2px',
+                  background: 'var(--rose)', color: '#fff',
+                  fontSize: '9px', fontWeight: 700,
+                  borderRadius: '50%', width: '15px', height: '15px',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>{wishlist.length}</span>
+              )}
+            </Link>
 
             {/* Cart */}
             <button

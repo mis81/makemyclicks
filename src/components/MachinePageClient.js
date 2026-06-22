@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import WishlistButton from '@/components/WishlistButton'
 
 const HERO_SLIDES = [
   { img: 'https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/machine-factory.jpg', eyebrow: 'DTF & UV Printing Equipment', line1: 'PRINTING', line2: 'MACHINES', sub: 'Professional DTF and UV printing machines for garment and surface printing. Trade and retail pricing available.', cta: 'Shop Machines', position: 'center center' },
@@ -131,6 +132,7 @@ export default function MachinePageClient({ machines }) {
                     onMouseEnter={e => e.target.style.transform = 'scale(1.04)'}
                     onMouseLeave={e => e.target.style.transform = 'scale(1)'} />
                   {p.tags && <span style={{ position: 'absolute', top: '14px', left: '14px', fontSize: '9px', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 700, padding: '5px 10px', background: p.tags === 'Bestseller' ? 'var(--rose)' : 'var(--ink)', color: '#ffffff' }}>{p.tags}</span>}
+                  <WishlistButton productId={p.id} />
                 </div>
                 <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                   <div style={{ fontSize: '14px', fontWeight: 500, color: 'var(--ink)', lineHeight: 1.4, marginBottom: '10px' }}>{p.name}</div>

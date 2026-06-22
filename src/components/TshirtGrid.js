@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import WishlistButton from '@/components/WishlistButton'
 
 const FILTERS = ['All', 'Oversized', 'Art Print', 'Bestseller', 'Premium', 'New In']
 
@@ -80,6 +81,7 @@ export default function TshirtGrid({ products }) {
                       {p.tags}
                     </span>
                   )}
+                  <WishlistButton productId={p.id} />
                 </div>
               </Link>
               <div style={{ padding: '18px', flex: 1, display: 'flex', flexDirection: 'column' }}>

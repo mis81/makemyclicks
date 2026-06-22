@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
+import WishlistButton from '@/components/WishlistButton'
 
 const HERO_SLIDES = [
   { img: 'https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/mousepad-hero1.jpg', eyebrow: 'For the Serious Gamer', line1: 'PRECISION', line2: 'SURFACES', sub: 'Non-slip gaming mousepads engineered for maximum precision. Smooth glide. Stitched edges. Built to last.', cta: 'Shop Gaming', position: 'center center' },
@@ -143,6 +144,7 @@ export default function MousepadPageClient({ products }) {
                     onMouseEnter={e => e.target.style.transform = 'scale(1.05)'}
                     onMouseLeave={e => e.target.style.transform = 'scale(1)'} />
                   {p.tags && <span style={{ position: 'absolute', top: '14px', left: '14px', fontSize: '9px', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 700, padding: '5px 10px', background: p.tags === 'Bestseller' ? 'var(--rose)' : 'var(--ink)', color: '#ffffff' }}>{p.tags}</span>}
+                  <WishlistButton productId={p.id} />
                 </div>
                 <div style={{ padding: '18px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                   <div style={{ fontSize: '13px', fontWeight: 400, color: 'var(--ink)', lineHeight: 1.5, marginBottom: '10px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{p.name}</div>
