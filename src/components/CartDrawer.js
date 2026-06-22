@@ -57,7 +57,7 @@ export default function CartDrawer() {
           window.location.href = '/order-success'
         },
         prefill: { name: '', email: '', contact: '' },
-        theme: { color: '#c9a96e' },
+        theme: { color: '#c9748a' },
       }
       const rzp = new window.Razorpay(options)
       rzp.open()
@@ -76,7 +76,7 @@ export default function CartDrawer() {
       {/* Backdrop */}
       <div onClick={() => setOpen(false)} style={{
         position: 'fixed', inset: 0,
-        background: 'rgba(0,0,0,0.75)',
+        background: 'rgba(10,10,10,0.5)',
         zIndex: 200,
         opacity: open ? 1 : 0,
         pointerEvents: open ? 'all' : 'none',
@@ -88,13 +88,13 @@ export default function CartDrawer() {
       <div style={{
         position: 'fixed', top: 0, right: 0, bottom: 0,
         width: '440px',
-        background: 'var(--ink)',
+        background: '#ffffff',
         borderLeft: '1px solid var(--border)',
         transform: open ? 'translateX(0)' : 'translateX(100%)',
         transition: 'transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94)',
         zIndex: 201,
         display: 'flex', flexDirection: 'column',
-        boxShadow: open ? '-20px 0 60px rgba(0,0,0,0.6)' : 'none',
+        boxShadow: open ? '-20px 0 60px rgba(0,0,0,0.12)' : 'none',
       }}>
 
         {/* Header */}
@@ -102,14 +102,14 @@ export default function CartDrawer() {
           padding: '24px 28px',
           borderBottom: '1px solid var(--border)',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          background: 'var(--ink2)',
+          background: '#ffffff',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: '22px', fontWeight: 700, color: 'var(--fog)', letterSpacing: '-.01em' }}>
+            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: '22px', fontWeight: 700, color: 'var(--ink)', letterSpacing: '-.01em' }}>
               Your Bag
             </div>
             {count > 0 && (
-              <div style={{ background: 'var(--gold)', color: 'var(--ink)', fontSize: '11px', fontWeight: 700, padding: '3px 10px', borderRadius: '20px' }}>
+              <div style={{ background: 'var(--rose)', color: '#ffffff', fontSize: '11px', fontWeight: 700, padding: '3px 10px', borderRadius: '20px' }}>
                 {count}
               </div>
             )}
@@ -120,7 +120,7 @@ export default function CartDrawer() {
             cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontSize: '16px', transition: 'all .2s', borderRadius: '2px',
           }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--fog)'; e.currentTarget.style.color = 'var(--fog)' }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--ink)'; e.currentTarget.style.color = 'var(--ink)' }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted)' }}>
             ✕
           </button>
@@ -128,7 +128,7 @@ export default function CartDrawer() {
 
         {/* Free delivery progress bar */}
         {cart.length > 0 && (
-          <div style={{ padding: '14px 28px', background: 'var(--ink2)', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ padding: '14px 28px', background: '#ffffff', borderBottom: '1px solid var(--border)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
               <span style={{ fontSize: '11px', color: freeDelivery ? '#2d6a4f' : 'var(--muted)', fontWeight: 500 }}>
                 {freeDelivery ? '✓ Free delivery unlocked!' : `Add Rs.${499 - total} more for free delivery`}
@@ -139,7 +139,7 @@ export default function CartDrawer() {
               <div style={{
                 height: '100%',
                 width: Math.min((total / 499) * 100, 100) + '%',
-                background: freeDelivery ? '#2d6a4f' : 'var(--gold)',
+                background: freeDelivery ? '#2d6a4f' : 'var(--rose)',
                 borderRadius: '2px',
                 transition: 'width 0.4s ease',
               }}/>
@@ -159,10 +159,10 @@ export default function CartDrawer() {
                 </svg>
               </div>
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: '20px', color: 'var(--fog)', marginBottom: '8px' }}>Your bag is empty</div>
+                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: '20px', color: 'var(--ink)', marginBottom: '8px' }}>Your bag is empty</div>
                 <div style={{ fontSize: '13px', color: 'var(--muted)', lineHeight: 1.6, fontWeight: 300 }}>Add something worth wearing</div>
               </div>
-              <button onClick={() => setOpen(false)} style={{ background: 'var(--fog)', color: 'var(--ink)', border: 'none', padding: '12px 28px', fontSize: '11px', fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: "'Inter',sans-serif" }}>
+              <button onClick={() => setOpen(false)} style={{ background: 'var(--ink)', color: '#ffffff', border: 'none', padding: '12px 28px', fontSize: '11px', fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: "'Inter',sans-serif" }}>
                 Browse products
               </button>
             </div>
@@ -171,22 +171,22 @@ export default function CartDrawer() {
               <div key={item.id} style={{
                 display: 'flex', gap: '14px',
                 padding: '16px 28px',
-                borderBottom: '1px solid var(--border2)',
+                borderBottom: '1px solid var(--border)',
                 transition: 'background .2s',
               }}
-                onMouseEnter={e => e.currentTarget.style.background = 'var(--ink2)'}
+                onMouseEnter={e => e.currentTarget.style.background = '#faf9f7'}
                 onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
                 {/* Image */}
-                <div style={{ width: '80px', height: '90px', flexShrink: 0, overflow: 'hidden', background: 'var(--ink3)', border: '1px solid var(--border)' }}>
+                <div style={{ width: '80px', height: '90px', flexShrink: 0, overflow: 'hidden', background: '#f5f0e8', border: '1px solid var(--border)' }}>
                   <img src={item.img} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}/>
                 </div>
                 {/* Info */}
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: '13px', color: 'var(--fog)', fontWeight: 400, lineHeight: 1.4, marginBottom: '6px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                  <div style={{ fontSize: '13px', color: 'var(--ink)', fontWeight: 400, lineHeight: 1.4, marginBottom: '6px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                     {item.name}
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                    <span style={{ fontFamily: "'Playfair Display',serif", fontSize: '18px', fontWeight: 700, color: 'var(--gold)' }}>
+                    <span style={{ fontFamily: "'Playfair Display',serif", fontSize: '18px', fontWeight: 700, color: 'var(--rose)' }}>
                       Rs.{(item.price * item.qty).toLocaleString()}
                     </span>
                     <span style={{ fontSize: '11px', color: 'var(--muted)' }}>Rs.{item.price} each</span>
@@ -195,24 +195,24 @@ export default function CartDrawer() {
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div style={{ display: 'flex', alignItems: 'center', border: '1px solid var(--border)', overflow: 'hidden' }}>
                       <button onClick={() => updateQty(item.id, -1)} style={{
-                        width: '32px', height: '32px', background: 'var(--ink2)',
-                        border: 'none', color: 'var(--fog)', cursor: 'pointer',
+                        width: '32px', height: '32px', background: '#f5f0e8',
+                        border: 'none', color: 'var(--ink)', cursor: 'pointer',
                         fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center',
                         transition: 'background .2s',
                       }}
-                        onMouseEnter={e => e.currentTarget.style.background = 'var(--ink3)'}
-                        onMouseLeave={e => e.currentTarget.style.background = 'var(--ink2)'}>−</button>
-                      <span style={{ width: '36px', textAlign: 'center', fontSize: '13px', fontWeight: 600, color: 'var(--fog)', borderLeft: '1px solid var(--border)', borderRight: '1px solid var(--border)', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        onMouseEnter={e => e.currentTarget.style.background = '#ede8df'}
+                        onMouseLeave={e => e.currentTarget.style.background = '#f5f0e8'}>−</button>
+                      <span style={{ width: '36px', textAlign: 'center', fontSize: '13px', fontWeight: 600, color: 'var(--ink)', borderLeft: '1px solid var(--border)', borderRight: '1px solid var(--border)', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         {item.qty}
                       </span>
                       <button onClick={() => updateQty(item.id, 1)} style={{
-                        width: '32px', height: '32px', background: 'var(--ink2)',
-                        border: 'none', color: 'var(--fog)', cursor: 'pointer',
+                        width: '32px', height: '32px', background: '#f5f0e8',
+                        border: 'none', color: 'var(--ink)', cursor: 'pointer',
                         fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center',
                         transition: 'background .2s',
                       }}
-                        onMouseEnter={e => e.currentTarget.style.background = 'var(--ink3)'}
-                        onMouseLeave={e => e.currentTarget.style.background = 'var(--ink2)'}>+</button>
+                        onMouseEnter={e => e.currentTarget.style.background = '#ede8df'}
+                        onMouseLeave={e => e.currentTarget.style.background = '#f5f0e8'}>+</button>
                     </div>
                     <button onClick={() => remove(item.id)} style={{
                       background: 'none', border: 'none', color: 'var(--muted)',
@@ -233,7 +233,7 @@ export default function CartDrawer() {
 
         {/* Footer */}
         {cart.length > 0 && (
-          <div style={{ borderTop: '1px solid var(--border)', background: 'var(--ink2)' }}>
+          <div style={{ borderTop: '1px solid var(--border)', background: '#f9f8f5' }}>
 
             {/* Coupon */}
             <div style={{ padding: '16px 28px', borderBottom: '1px solid var(--border)' }}>
@@ -244,8 +244,8 @@ export default function CartDrawer() {
                   value={coupon}
                   onChange={e => setCoupon(e.target.value.toUpperCase())}
                   style={{
-                    flex: 1, background: 'var(--ink)', border: '1px solid var(--border)',
-                    color: 'var(--fog)', padding: '10px 14px', fontSize: '12px',
+                    flex: 1, background: '#ffffff', border: '1px solid var(--border)',
+                    color: 'var(--ink)', padding: '10px 14px', fontSize: '12px',
                     fontFamily: "'Inter',sans-serif", outline: 'none', letterSpacing: '.04em',
                   }}
                 />
@@ -257,7 +257,7 @@ export default function CartDrawer() {
                     fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase',
                     cursor: 'pointer', fontFamily: "'Inter',sans-serif", transition: 'all .2s',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--gold)'; e.currentTarget.style.color = 'var(--gold)' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--rose)'; e.currentTarget.style.color = 'var(--rose)' }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted)' }}>
                   Apply
                 </button>
@@ -268,7 +268,7 @@ export default function CartDrawer() {
             <div style={{ padding: '16px 28px', borderBottom: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
                 <span style={{ color: 'var(--muted)' }}>Subtotal ({count} items)</span>
-                <span style={{ color: 'var(--fog)' }}>Rs.{total.toLocaleString()}</span>
+                <span style={{ color: 'var(--ink)' }}>Rs.{total.toLocaleString()}</span>
               </div>
               {savings > 0 && (
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
@@ -278,13 +278,13 @@ export default function CartDrawer() {
               )}
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
                 <span style={{ color: 'var(--muted)' }}>Delivery</span>
-                <span style={{ color: freeDelivery ? '#2d6a4f' : 'var(--fog)', fontWeight: 500 }}>
+                <span style={{ color: freeDelivery ? '#2d6a4f' : 'var(--ink)', fontWeight: 500 }}>
                   {freeDelivery ? 'FREE' : 'Rs.49'}
                 </span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '10px', borderTop: '1px solid var(--border)' }}>
-                <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--fog)', letterSpacing: '.02em' }}>Total</span>
-                <span style={{ fontFamily: "'Playfair Display',serif", fontSize: '22px', fontWeight: 700, color: 'var(--fog)' }}>
+                <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--ink)', letterSpacing: '.02em' }}>Total</span>
+                <span style={{ fontFamily: "'Playfair Display',serif", fontSize: '22px', fontWeight: 700, color: 'var(--ink)' }}>
                   Rs.{(total + (freeDelivery ? 0 : 49)).toLocaleString()}
                 </span>
               </div>
@@ -292,16 +292,16 @@ export default function CartDrawer() {
 
             {/* Payment methods */}
             <div style={{ padding: '12px 28px', borderBottom: '1px solid var(--border)' }}>
-              <div style={{ fontSize: '9px', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--muted2)', marginBottom: '10px' }}>
+              <div style={{ fontSize: '9px', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '10px' }}>
                 Accepted payments
               </div>
               <div style={{ display: 'flex', gap: '8px' }}>
                 {['UPI', 'Card', 'COD', 'EMI', 'NetBanking'].map(p => (
                   <div key={p} style={{
-                    padding: '5px 10px', background: 'var(--ink)',
+                    padding: '5px 10px', background: '#f5f0e8',
                     border: '1px solid var(--border)',
                     fontSize: '9px', fontWeight: 700, letterSpacing: '.06em',
-                    color: 'var(--muted)', borderRadius: '2px',
+                    color: 'var(--ink)', borderRadius: '2px',
                   }}>{p}</div>
                 ))}
               </div>
@@ -310,14 +310,14 @@ export default function CartDrawer() {
             {/* Checkout button */}
             <div style={{ padding: '16px 28px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <button onClick={handleCheckout} style={{
-                width: '100%', background: 'var(--fog)', color: 'var(--ink)',
+                width: '100%', background: 'var(--ink)', color: '#ffffff',
                 border: 'none', padding: '16px', fontSize: '12px', fontWeight: 700,
                 letterSpacing: '.12em', textTransform: 'uppercase', cursor: 'pointer',
                 fontFamily: "'Inter',sans-serif", transition: 'background .2s',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
               }}
-                onMouseEnter={e => e.currentTarget.style.background = 'var(--gold)'}
-                onMouseLeave={e => e.currentTarget.style.background = 'var(--fog)'}>
+                onMouseEnter={e => e.currentTarget.style.background = 'var(--rose)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'var(--ink)'}>
                 <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                 </svg>
@@ -329,7 +329,7 @@ export default function CartDrawer() {
                 fontWeight: 500, letterSpacing: '.08em', textTransform: 'uppercase',
                 cursor: 'pointer', fontFamily: "'Inter',sans-serif", transition: 'all .2s',
               }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--fog)'; e.currentTarget.style.color = 'var(--fog)' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--ink)'; e.currentTarget.style.color = 'var(--ink)' }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted)' }}>
                 Continue Shopping
               </button>
