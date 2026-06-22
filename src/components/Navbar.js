@@ -74,7 +74,7 @@ export default function Navbar() {
             <img
               src="https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/logo.png"
               alt="MakeMyClicks"
-              style={{ width: '38px', height: '38px', objectFit: 'contain' }}
+              style={{ width: '38px', height: '38px', objectFit: 'contain', borderRadius: '10px' }}
               onError={e => e.target.style.display = 'none'}
             />
             <span style={{

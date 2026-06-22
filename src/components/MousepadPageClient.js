@@ -138,6 +138,7 @@ export default function MousepadPageClient({ products }) {
                 onMouseLeave={e => e.currentTarget.style.background = 'var(--white)'}>
                 <div style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: 'var(--cream2)' }}>
                   <img src={p.image_main_url} alt={p.name} loading="lazy"
+                    onError={e => { e.target.onerror = null; e.target.src = 'https://i.ibb.co/4ZNBQygw/Non-Slip-Gaming-Mouse-Pad-Materials-100-smooth.jpg' }}
                     style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.5s' }}
                     onMouseEnter={e => e.target.style.transform = 'scale(1.05)'}
                     onMouseLeave={e => e.target.style.transform = 'scale(1)'} />

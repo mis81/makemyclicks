@@ -71,6 +71,7 @@ export default function TshirtGrid({ products }) {
               <Link href={'/products/' + p.slug} style={{ display: 'block', textDecoration: 'none' }}>
                 <div style={{ position: 'relative', aspectRatio: '3/4', overflow: 'hidden', background: 'var(--cream2)' }}>
                   <img src={p.image_main_url} alt={p.name} loading="lazy"
+                    onError={e => { e.target.onerror = null; e.target.src = 'https://i.ibb.co/zWTVdZzN/Veirdo-Men-s-Oversized-T-Shirt-240-GSM-Pure.jpg' }}
                     style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.5s' }}
                     onMouseEnter={e => e.target.style.transform = 'scale(1.05)'}
                     onMouseLeave={e => e.target.style.transform = 'scale(1)'} />

@@ -500,12 +500,6 @@ footer { border-top: 1px solid var(--border); background: var(--ink); }
 img {
   transition: opacity 0.3s ease;
 }
-img[loading="lazy"] {
-  opacity: 0;
-}
-img[loading="lazy"].loaded {
-  opacity: 1;
-}
 
 button, a {
   -webkit-tap-highlight-color: transparent;
