@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
       <body>
         <Navbar />
         <PageTransition>
-          <main>{children}</main>
+          <main style={{ paddingTop: 0 }}>{children}</main>
         </PageTransition>
         <Footer />
         <CartDrawer />

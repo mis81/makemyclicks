@@ -31,8 +31,8 @@ export default async function HomePage() {
       <section style={{
         position: 'relative',
         width: '100%',
-        height: '600px',
-        minHeight: '600px',
+        height: '680px',
+        minHeight: '680px',
         overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
@@ -61,7 +61,8 @@ export default async function HomePage() {
           gridTemplateColumns: '1fr 1fr',
           gap: '60px',
           alignItems: 'center',
-          paddingTop: '20px',
+          marginTop: '0',
+          paddingTop: '80px',
         }}>
 
           {/* LEFT — Text */}
@@ -137,7 +138,7 @@ export default async function HomePage() {
             gridTemplateColumns: '1fr 1fr',
             gridTemplateRows: '1fr 1fr',
             gap: '8px',
-            height: '460px',
+            height: '440px',
           }}>
             {products.slice(0, 4).map((p, i) => (
               <Link key={p.id} href={'/products/' + p.slug} className="mosaic-tile">
@@ -150,16 +151,6 @@ export default async function HomePage() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div style={{
-          position: 'absolute', bottom: '28px', left: '50%',
-          transform: 'translateX(-50%)', zIndex: 2,
-          display: 'flex', flexDirection: 'column',
-          alignItems: 'center', gap: '8px',
-        }}>
-          <span style={{ fontSize: '9px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)' }}>Scroll</span>
-          <div className="scroll-line" />
-        </div>
       </section>
 
       {/* ── MARQUEE ── */}
