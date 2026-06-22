@@ -10,7 +10,7 @@ const HERO_SLIDES = [
     line2: 'MACHINES',
     sub: 'Professional DTF and UV printing machines for garment and surface printing. Trade and retail pricing available.',
     cta: 'Shop Machines',
-    position: 'center center',
+    position: '50% 30%',
   },
   {
     img: 'https://i.ibb.co/3yfPRqTk/Chat-GPT-Image-Jun-22-2026-03-29-51-PM.png',
@@ -19,7 +19,7 @@ const HERO_SLIDES = [
     line2: 'PERFORM',
     sub: 'High precision DTF printers. 1440 DPI resolution. Complete setup with RIP software included.',
     cta: 'View Specs',
-    position: 'center center',
+    position: '50% 60%',
   },
 ]
 
