@@ -69,7 +69,7 @@ export default function TshirtGrid({ products }) {
             <div key={p.id} style={{ borderRight: '1px solid var(--border)', borderBottom: '1px solid var(--border)', background: 'var(--white)', transition: 'background 0.2s', display: 'flex', flexDirection: 'column' }}
               onMouseEnter={e => e.currentTarget.style.background = 'var(--cream)'}
               onMouseLeave={e => e.currentTarget.style.background = 'var(--white)'}>
-              <Link href={'/products/' + p.slug} style={{ display: 'block', textDecoration: 'none' }}>
+              <Link href={'/products/' + p.slug} style={{ display: 'block', textDecoration: 'none' }} data-cursor="shop">
                 <div style={{ position: 'relative', aspectRatio: '3/4', overflow: 'hidden', background: 'var(--cream2)' }}>
                   <img src={p.image_main_url} alt={p.name} loading="lazy"
                     onError={e => { e.target.onerror = null; e.target.src = 'https://i.ibb.co/zWTVdZzN/Veirdo-Men-s-Oversized-T-Shirt-240-GSM-Pure.jpg' }}
@@ -104,7 +104,7 @@ export default function TshirtGrid({ products }) {
                   {p.compare_price && <span style={{ fontSize: '12px', color: 'var(--muted)', textDecoration: 'line-through' }}>Rs.{p.compare_price}</span>}
                   {off > 0 && <span style={{ fontSize: '10px', fontWeight: 700, color: 'var(--rose)' }}>{off}% off</span>}
                 </div>
-                <button onClick={(e) => addToCart(p, e)} style={{ width: '100%', background: isAdded ? 'var(--rose)' : 'transparent', border: isAdded ? '1px solid var(--rose)' : '1px solid var(--border)', color: isAdded ? '#ffffff' : 'var(--muted)', cursor: 'pointer', fontFamily: "'Inter', sans-serif", fontSize: '10px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '11px', transition: 'all 0.2s' }}
+                <button onClick={(e) => addToCart(p, e)} data-cursor="add" style={{ width: '100%', background: isAdded ? 'var(--rose)' : 'transparent', border: isAdded ? '1px solid var(--rose)' : '1px solid var(--border)', color: isAdded ? '#ffffff' : 'var(--muted)', cursor: 'pointer', fontFamily: "'Inter', sans-serif", fontSize: '10px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '11px', transition: 'all 0.2s' }}
                   onMouseEnter={e => { if (!isAdded) { e.currentTarget.style.background = 'var(--ink)'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'var(--ink)' } }}
                   onMouseLeave={e => { if (!isAdded) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--muted)'; e.currentTarget.style.borderColor = 'var(--border)' } }}>
                   {isAdded ? '✓ Added to bag' : 'Add to bag'}

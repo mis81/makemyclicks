@@ -169,14 +169,14 @@ export default async function HomePage() {
       </div>
 
       {/* ── FULL WIDTH BANNER ── */}
-      <div className="full-banner">
+      <div className="full-banner" data-cursor="explore">
         <img src="https://i.ibb.co/Rk1YMRS9/Model-Height-6-4-Wearing-Large-Big-Tall-1.jpg" alt="New Season" />
         <div className="full-banner-overlay">
           <div className="full-banner-content">
             <div className="full-banner-label">New Season</div>
             <div className="full-banner-title">NEW<br />VIBES</div>
             <div className="full-banner-sub">Discover everything new. 240 GSM cotton that moves with you.</div>
-            <Link href="/tshirts" className="btn-primary">Explore Collection</Link>
+            <Link href="/tshirts" className="btn-primary" data-cursor="shop">Explore Collection</Link>
           </div>
         </div>
       </div>

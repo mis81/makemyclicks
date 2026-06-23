@@ -32,7 +32,7 @@ export default function ProductCard({ product: p }) {
         display: 'block',
       }}
     >
-      <Link href={'/products/' + p.slug} style={{ textDecoration: 'none', display: 'block' }}>
+      <Link href={'/products/' + p.slug} style={{ textDecoration: 'none', display: 'block' }} data-cursor="shop">
         {/* Image container */}
         <div style={{ position: 'relative', aspectRatio: '3/4', overflow: 'hidden', background: 'var(--cream2)' }}>
           <motion.img
@@ -108,6 +108,7 @@ export default function ProductCard({ product: p }) {
             whileHover={{ backgroundColor: 'var(--ink)', color: '#ffffff', borderColor: 'var(--ink)' }}
             whileTap={{ scale: 0.97 }}
             onClick={addToCart}
+            data-cursor="add"
             transition={{ duration: 0.15 }}
             style={{
               width: '100%', background: 'transparent',

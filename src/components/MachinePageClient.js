@@ -125,7 +125,7 @@ export default function MachinePageClient({ machines }) {
               <div key={p.id} style={{ background: 'var(--white)', display: 'flex', flexDirection: 'column', transition: 'background 0.2s' }}
                 onMouseEnter={e => e.currentTarget.style.background = 'var(--cream)'}
                 onMouseLeave={e => e.currentTarget.style.background = 'var(--white)'}>
-                <div style={{ position: 'relative', aspectRatio: '4/3', overflow: 'hidden', background: 'var(--cream2)' }}>
+                <div data-cursor="details" style={{ position: 'relative', aspectRatio: '4/3', overflow: 'hidden', background: 'var(--cream2)' }}>
                   <img src={p.image_main_url} alt={p.name} loading="lazy"
                     onError={e => { e.target.src = 'https://i.ibb.co/Z6yPBfwc/A3-DTF-inkjet-printer-set-heat-transfer-t-shirt.jpg' }}
                     style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.5s' }}
@@ -152,7 +152,7 @@ export default function MachinePageClient({ machines }) {
                       {p.compare_price && <span style={{ fontSize: '12px', color: 'var(--muted)', textDecoration: 'line-through' }}>Rs.{p.compare_price.toLocaleString()}</span>}
                       {off > 0 && <span style={{ fontSize: '10px', fontWeight: 700, color: 'var(--rose)' }}>{off}% off</span>}
                     </div>
-                    <button onClick={(e) => addToCart(p, e)} style={{ width: '100%', background: isAdded ? 'var(--rose)' : 'transparent', border: isAdded ? '1px solid var(--rose)' : '1px solid var(--border)', color: isAdded ? '#ffffff' : 'var(--muted)', cursor: 'pointer', fontFamily: "'Inter', sans-serif", fontSize: '10px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '12px', transition: 'all 0.2s' }}
+                    <button onClick={(e) => addToCart(p, e)} data-cursor="add" style={{ width: '100%', background: isAdded ? 'var(--rose)' : 'transparent', border: isAdded ? '1px solid var(--rose)' : '1px solid var(--border)', color: isAdded ? '#ffffff' : 'var(--muted)', cursor: 'pointer', fontFamily: "'Inter', sans-serif", fontSize: '10px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '12px', transition: 'all 0.2s' }}
                       onMouseEnter={e => { if (!isAdded) { e.currentTarget.style.background = 'var(--ink)'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'var(--ink)' } }}
                       onMouseLeave={e => { if (!isAdded) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--muted)'; e.currentTarget.style.borderColor = 'var(--border)' } }}>
                       {isAdded ? '✓ Added to bag' : 'Add to bag'}

@@ -143,6 +143,7 @@ export default function Navbar() {
             {/* Cart */}
             <button
               onClick={() => window.dispatchEvent(new Event('mmc_open_cart'))}
+              data-cursor="cart"
               style={{
                 background: 'none', border: 'none', cursor: 'pointer',
                 color: isTransparent ? 'rgba(255,255,255,0.8)' : 'var(--muted)',
