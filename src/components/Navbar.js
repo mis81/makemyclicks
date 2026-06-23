@@ -70,9 +70,7 @@ export default function Navbar() {
         }}>
 
           {/* Logo */}
-          <div style={{ position: 'relative', paddingBottom: '10px' }}>
-            <AnimatedLogo isTransparent={isTransparent} />
-          </div>
+          <AnimatedLogo isTransparent={isTransparent} />
 
           {/* Center nav */}
           <div style={{

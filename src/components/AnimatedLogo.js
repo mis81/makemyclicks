@@ -46,7 +46,7 @@ export default function AnimatedLogo({ isTransparent = false }) {
       style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '14px',
+        gap: '12px',
         textDecoration: 'none',
         flexShrink: 0,
       }}
@@ -57,6 +57,10 @@ export default function AnimatedLogo({ isTransparent = false }) {
         width: '52px',
         height: '52px',
         flexShrink: 0,
+        borderRadius: '50%',
+        background: 'var(--ink)',
+        padding: '6px',
+        boxShadow: '0 2px 12px rgba(0,0,0,0.15)',
       }}>
         <AnimatePresence mode="wait">
           <motion.img
@@ -76,6 +80,7 @@ export default function AnimatedLogo({ isTransparent = false }) {
               width: '100%',
               height: '100%',
               objectFit: 'contain',
+              borderRadius: '50%',
             }}
           />
         </AnimatePresence>
@@ -84,7 +89,7 @@ export default function AnimatedLogo({ isTransparent = false }) {
       {/* Brand name with color transition */}
       <motion.span
         animate={{
-          color: isTransparent ? '#ffffff' : logo.textColor,
+          color: isTransparent ? '#ffffff' : '#0A0A0A',
         }}
         transition={{ duration: 0.5 }}
         style={{
@@ -97,7 +102,7 @@ export default function AnimatedLogo({ isTransparent = false }) {
       >
         MAKE
         <motion.span
-          animate={{ color: logo.accentColor }}
+          animate={{ color: '#C9748A' }}
           transition={{ duration: 0.5 }}
         >
           MY
@@ -105,13 +110,12 @@ export default function AnimatedLogo({ isTransparent = false }) {
         CLICKS
       </motion.span>
 
-      {/* Dot indicators below logo */}
+      {/* Dot indicators */}
       <div style={{
-        position: 'absolute',
-        bottom: '-8px',
-        left: '0',
         display: 'flex',
         gap: '4px',
+        alignItems: 'center',
+        marginLeft: '4px',
       }}>
         {LOGOS.map((_, i) => (
           <motion.div
