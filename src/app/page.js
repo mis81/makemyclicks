@@ -71,7 +71,7 @@ export default async function HomePage() {
         {/* Overlay */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(to right, rgba(10,10,10,0.80) 0%, rgba(10,10,10,0.4) 55%, rgba(10,10,10,0.1) 100%)',
+          background: 'linear-gradient(to right, rgba(8,8,12,0.92) 0%, rgba(15,10,20,0.65) 45%, rgba(15,10,20,0.15) 100%)',
         }} />
 
         {/* Content — left aligned like Kreo */}
@@ -83,29 +83,39 @@ export default async function HomePage() {
           justifyContent: 'flex-end',
           paddingBottom: '48px',
         }}>
-          {/* Breadcrumb */}
+          {/* Breadcrumb — absolute top-left */}
           <div style={{
-            display: 'flex', alignItems: 'center', gap: '8px',
-            marginBottom: '12px',
+            position: 'absolute',
+            top: '28px',
+            left: '40px',
+            zIndex: 3,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
           }}>
-            <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>🏠</span>
-            <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>/</span>
-            <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>Collections</span>
-            <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>/</span>
-            <span style={{ fontSize: '12px', color: '#ffffff', fontWeight: 500 }}>New Arrivals</span>
+            <svg width="14" height="14" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9,22 9,12 15,12 15,22"/>
+            </svg>
+            <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '12px' }}>/</span>
+            <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '12px', letterSpacing: '0.04em' }}>Collections</span>
+            <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '12px' }}>/</span>
+            <span style={{ color: 'rgba(255,255,255,0.9)', fontSize: '12px', fontWeight: 500, letterSpacing: '0.04em' }}>New Arrivals</span>
           </div>
 
           {/* Giant page title like Kreo */}
           <h1 style={{
             fontFamily: "'Bebas Neue', sans-serif",
-            fontSize: 'clamp(64px,8vw,120px)',
-            lineHeight: 0.88,
+            fontSize: 'clamp(72px,9vw,130px)',
+            lineHeight: 0.85,
             letterSpacing: '0.01em',
             color: '#ffffff',
-            margin: 0,
+            marginBottom: '20px',
+            textShadow: '0 2px 40px rgba(0,0,0,0.3)',
           }}>
             WEAR IT<br />
-            <span style={{ color: 'var(--rose)' }}>YOUR WAY</span>
+            YOUR<br />
+            <span style={{ color: 'var(--rose)' }}>WAY</span>
           </h1>
         </div>
 
@@ -121,6 +131,22 @@ export default async function HomePage() {
           height: '380px',
           zIndex: 2,
         }}>
+          <div style={{
+            position: 'absolute',
+            top: '-12px',
+            right: '-8px',
+            background: 'var(--rose)',
+            color: '#ffffff',
+            fontSize: '10px',
+            fontWeight: 700,
+            letterSpacing: '0.08em',
+            padding: '6px 14px',
+            zIndex: 10,
+            transform: 'rotate(2deg)',
+            boxShadow: '0 4px 16px rgba(201,116,138,0.4)',
+          }}>
+            NEW DROP ✦
+          </div>
           {[
             'https://i.ibb.co/qM9t0Gsm/Instinct-Print-House-x-Grace-Beswick-Art-Unisex.jpg',
             'https://i.ibb.co/Rk1YMRS9/Model-Height-6-4-Wearing-Large-Big-Tall-1.jpg',
@@ -137,6 +163,74 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* ── FILTER BAR ── */}
+      <div style={{
+        background: 'var(--white)',
+        borderBottom: '1px solid var(--border)',
+        position: 'sticky',
+        top: '72px',
+        zIndex: 50,
+      }}>
+        <div style={{
+          maxWidth: '1400px',
+          margin: '0 auto',
+          padding: '0 40px',
+          height: '52px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <span style={{ fontSize: '12px', color: 'var(--muted)', letterSpacing: '0.04em' }}>
+              11 products
+            </span>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              {['All', 'T-Shirts', 'Mousepads', 'Machines'].map(f => (
+                <a key={f} href={
+                  f === 'All' ? '/' :
+                  f === 'T-Shirts' ? '/tshirts' :
+                  f === 'Mousepads' ? '/mousepads' :
+                  '/machines'
+                } style={{
+                  fontSize: '11px',
+                  fontWeight: 500,
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  textDecoration: 'none',
+                  padding: '4px 12px',
+                  background: f === 'All' ? 'var(--ink)' : 'transparent',
+                  color: f === 'All' ? '#ffffff' : 'var(--muted)',
+                  border: '1px solid',
+                  borderColor: f === 'All' ? 'var(--ink)' : 'var(--border)',
+                  transition: 'all 0.2s',
+                }}>
+                  {f}
+                </a>
+              ))}
+            </div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: 'var(--muted)' }}>
+            <span style={{ letterSpacing: '0.04em' }}>Sort by:</span>
+            <select style={{
+              background: 'transparent',
+              border: '1px solid var(--border)',
+              color: 'var(--ink)',
+              fontSize: '12px',
+              padding: '4px 10px',
+              fontFamily: "'Inter', sans-serif",
+              cursor: 'pointer',
+              outline: 'none',
+            }}>
+              <option>Featured ●</option>
+              <option>Price: Low to High</option>
+              <option>Price: High to Low</option>
+              <option>New Arrivals</option>
+              <option>Bestsellers</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
       {/* ── MARQUEE ── */}
       <FadeIn delay={0.1}>
