@@ -64,7 +64,7 @@ export default function Navbar() {
       }}>
         <div style={{
           maxWidth: '1400px', margin: '0 auto',
-          padding: '0 40px', height: '68px',
+          padding: '0 40px', height: '72px',
           display: 'flex', alignItems: 'center',
           justifyContent: 'space-between', gap: '24px',
         }}>

@@ -32,7 +32,7 @@ export default function AnimatedLogo({ isTransparent = false }) {
     if (isHovered) return
     const t = setInterval(() => {
       setCurrent(prev => (prev + 1) % LOGOS.length)
-    }, 3000)
+    }, 2500)
     return () => clearInterval(t)
   }, [isHovered])
 
@@ -46,7 +46,7 @@ export default function AnimatedLogo({ isTransparent = false }) {
       style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '10px',
+        gap: '14px',
         textDecoration: 'none',
         flexShrink: 0,
       }}
@@ -54,8 +54,8 @@ export default function AnimatedLogo({ isTransparent = false }) {
       {/* Morphing logo image */}
       <div style={{
         position: 'relative',
-        width: '38px',
-        height: '38px',
+        width: '52px',
+        height: '52px',
         flexShrink: 0,
       }}>
         <AnimatePresence mode="wait">
@@ -63,12 +63,12 @@ export default function AnimatedLogo({ isTransparent = false }) {
             key={current}
             src={logo.img}
             alt="MakeMyClicks"
-            initial={{ opacity: 0, scale: 0.8, rotate: -30 }}
+            initial={{ opacity: 0, scale: 0.75, rotate: -45 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            exit={{ opacity: 0, scale: 0.8, rotate: 30 }}
+            exit={{ opacity: 0, scale: 0.75, rotate: 45 }}
             transition={{
-              duration: 0.5,
-              ease: [0.25, 0.46, 0.45, 0.94],
+              duration: 0.7,
+              ease: [0.34, 1.56, 0.64, 1],
             }}
             style={{
               position: 'absolute',
@@ -89,7 +89,7 @@ export default function AnimatedLogo({ isTransparent = false }) {
         transition={{ duration: 0.5 }}
         style={{
           fontFamily: "'Bebas Neue', sans-serif",
-          fontSize: '20px',
+          fontSize: '24px',
           letterSpacing: '0.04em',
           lineHeight: 1,
           whiteSpace: 'nowrap',
