@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import SlidingNav from '@/components/SlidingNav'
 import { useWishlist } from '@/hooks/useWishlist'
+import AnimatedLogo from '@/components/AnimatedLogo'
 
 export default function Navbar() {
   const [cartCount, setCartCount] = useState(0)
@@ -69,26 +70,9 @@ export default function Navbar() {
         }}>
 
           {/* Logo */}
-          <Link href="/" style={{
-            display: 'flex', alignItems: 'center', gap: '10px',
-            textDecoration: 'none', flexShrink: 0,
-          }}>
-            <img
-              src="https://abhbsihvzfxgmogknvwm.supabase.co/storage/v1/object/public/product-images/logo.png"
-              alt="MakeMyClicks"
-              style={{ width: '38px', height: '38px', objectFit: 'contain', borderRadius: '10px' }}
-              onError={e => e.target.style.display = 'none'}
-            />
-            <span style={{
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: '20px',
-              color: isTransparent ? '#ffffff' : 'var(--ink)',
-              letterSpacing: '0.04em',
-              transition: 'color 0.4s ease',
-            }}>
-              MAKE<span style={{ color: 'var(--rose)' }}>MY</span>CLICKS
-            </span>
-          </Link>
+          <div style={{ position: 'relative', paddingBottom: '10px' }}>
+            <AnimatedLogo isTransparent={isTransparent} />
+          </div>
 
           {/* Center nav */}
           <div style={{
